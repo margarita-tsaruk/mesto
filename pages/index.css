@@ -1,2 +1,59 @@
 @import url(../vendor/normalize.css);
 @import url(../vendor/fonts/font.css);
+
+.root {
+    background-color:#000;
+  }
+
+.page {
+    min-width: 280px;
+    max-width: 1280px;
+    margin: 0 auto;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    color: #fff;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  .header {
+    border-bottom: 1px solid #545454;
+  }
+
+  @media all and (min-width: 720px) {
+    .header {
+      margin: 45px auto 0;
+      max-width: 880px;
+      min-height: 74px;
+    }
+  }
+
+  @media all and (max-width: 719px) {
+    .header {
+        margin: 28px auto 0;
+        max-width: 719px;
+        min-height: 56px;
+    }
+  }
+
+  .header__logo {
+    max-width: 142px;
+  }
+
+  @media all and (min-width: 720px) {
+    .header__logo {
+        margin-left: 32px;
+    }
+  }
+
+  @media all and (max-width: 719px) {
+    .header__logo {
+        max-width: 103px;
+        margin-left: 27px;
+    }
+  }
+  
