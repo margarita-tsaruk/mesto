@@ -22,7 +22,8 @@
 
   .header {
     border-bottom: 1px solid #545454;
-    margin: 45px auto 0;
+    padding-top: 45px;
+    margin: 0 auto;
     max-width: 880px;
     min-height: 74px;
   }
@@ -239,6 +240,7 @@
     background-position: center;
     background-color: #000;
     margin: 0;
+    padding: 0;
     align-self: center;
     justify-self: end; 
     transition-property: opacity;
@@ -254,7 +256,6 @@
     .profile__add-button {
       min-width: 227px;
       justify-self: start;
-      padding: 0;
     }
   }
 
@@ -331,7 +332,7 @@
 
   .element {
     background-color: #fff;
-    border-radius: 3%;
+    border-radius: 10px;
     display: grid;
     grid-template-areas: 
     "photo ."
@@ -380,7 +381,7 @@
     }
   }
 
-  .element__button {
+  .element__like-button {
     grid-area: button;
     padding: 0;
     margin: 0 20px 0 0;
@@ -396,10 +397,10 @@
     transition-timing-function: linear;
   }
 
-.element__button:hover {
+.element__like-button:hover {
   opacity: .5;
 }
-  .element__button:active {
+  .element__like-button:active {
     background: url(../images/LikeActive.png);
     background-color: #fff;
   }
@@ -434,6 +435,184 @@
       font-size: 14px;
     }
   }
-  
 
+.popup {
+  display: none;
+  align-items: start;
+  justify-content: start;
+  position: fixed;
+  background-color: rgba(0, 0, 0, .5);
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.popup__close-button {
+  background: transparent url(../images/CloseIcon.svg) center no-repeat;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  position: absolute;
+  min-width: 32px;
+  min-height: 32px;
+  top: -40px;
+  right: -40px;
+  transition-property: opacity;
+  transition-duration: 1s;
+  transition-timing-function: linear;
+  }
   
+  .popup__close-button:hover {
+    opacity: .5;
+  }
+  @media all and (max-width: 719px) {
+    .popup__close-button {
+      min-width: 20px;
+      min-height: 20px;
+      top: -35px;
+      right: 0px;
+    }
+  }
+
+.popup__content {
+ background-color: #fff;
+ border-radius: 10px;
+ width: 100%;
+ max-width: 430px;
+ max-height: 330px;
+ color: #000;
+ position: relative;
+ box-sizing: border-box;
+ padding: 34px 36px 37px;
+ margin: 195px auto;
+}
+
+@media all and (max-width: 719px) {
+  .popup__content {
+    max-width: 282px;
+    max-height: 322px;
+    padding: 25px 22px;
+  }
+}
+
+
+.popup__title {
+font-weight: 900;
+font-size: 24px;
+line-height: 1.20;
+margin: 0;
+max-width: 330px;
+}
+
+@media all and (max-width: 719px) {
+  .popup__title {
+    max-width: 238px;
+    font-size: 18px;
+    line-height: 1.22;
+  }
+}
+
+
+
+.popup__container {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  margin: 54px 0 0;
+
+}
+
+@media all and (max-width: 719px) {
+  .popup__container {
+    margin: 75px 0 45px;
+    gap: 30px;
+
+  }
+}
+
+
+.input__text {
+  border: 0;
+  border-bottom: 1px solid #bcbcc4;
+  box-sizing: border-box;
+  font-family: inherit;
+  min-height: 22px;
+  outline-color: #545454;
+  padding: 0;
+}
+
+.input__text::placeholder {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  color: red;
+  padding-bottom: 30px;
+}
+
+.input__text::-webkit-input-placeholder {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  color: red;
+  padding-bottom: 30px;
+}
+
+.input__text::-moz-placeholder {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  color: red;
+}
+
+.input__text::-ms-input-placeholder {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  color: red;
+  padding-bottom: 10px;
+}
+
+@media all and (max-width: 719px) {
+  .input__text {
+    padding-bottom: 7px;
+    min-height: 27px;
+  }
+}
+
+.popup__save-button {
+  margin: 48px 0 0;
+  background-color: #000;
+  border-radius: 2px;
+  color: #fff;
+  font-weight: 400;
+font-size: 18px;
+line-height: 1.22;
+text-align: center;
+width: 358px;
+height: 50px;
+cursor: pointer;
+padding: 0;
+transition-property: opacity;
+transition-duration: 1s;
+transition-timing-function: linear;
+  }
+
+.popup__save-button:hover {
+  opacity: .5;
+}
+
+@media all and (max-width: 719px) {
+  .popup__save-button {
+    max-width: 238px;
+    max-height: 46px;
+    margin: 0;
+    font-size: 14px;
+line-height: 1.21;
+  }
+}
+
+ .popup_opened {
+   display: block;
+ } 
