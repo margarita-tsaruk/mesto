@@ -547,31 +547,28 @@ max-width: 330px;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
-  color: red;
-  padding-bottom: 30px;
+  color: #000;
 }
 
 .input__text::-webkit-input-placeholder {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
-  color: red;
-  padding-bottom: 30px;
+  color: #000;
 }
 
 .input__text::-moz-placeholder {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
-  color: red;
+  color: #000;
 }
 
 .input__text::-ms-input-placeholder {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
-  color: red;
-  padding-bottom: 10px;
+  color: #000;
 }
 
 @media all and (max-width: 719px) {
