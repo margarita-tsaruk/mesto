@@ -30,7 +30,7 @@
 
   @media all and (min-width: 720px) and (max-width: 1024px)  {
     .header {
-      margin: 32px auto 0;
+      margin: 0 auto;
       max-width: 660px;
       min-height: 62px;
     }
@@ -201,7 +201,7 @@
     }
   }
 
-  .profile__intro {
+  .profile__job {
     grid-area: intro;
     font-weight: normal;
     font-size: 18px;
@@ -213,13 +213,13 @@
   }
 
   @media all and (max-width: 719px) {
-    .profile__intro {
+    .profile__job {
       justify-self: start;
     }
   }
 
   @media all and (max-width: 384px) {
-    .profile__intro {
+    .profile__job {
       font-size: 14px;
       line-height: 1.21;
       text-align: center;
@@ -402,7 +402,6 @@
 }
   .element__like-button:active {
     background: url(../images/LikeActive.png);
-    background-color: #fff;
   }
 
 
@@ -519,8 +518,8 @@ max-width: 330px;
 .popup__container {
   display: flex;
   flex-direction: column;
-  gap: 34px;
-  margin: 54px 0 0;
+  gap: 22px;
+  margin: 39px 0 0;
 
 }
 
@@ -538,38 +537,13 @@ max-width: 330px;
   border-bottom: 1px solid #bcbcc4;
   box-sizing: border-box;
   font-family: inherit;
-  min-height: 22px;
-  outline-color: #545454;
+  height: 36px;
+  outline-color: #1599df;
   padding: 0;
+  font-size: 14px;
+  font-weight: normal;
 }
 
-.input__text::placeholder {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.21;
-  color: #000;
-}
-
-.input__text::-webkit-input-placeholder {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.21;
-  color: #000;
-}
-
-.input__text::-moz-placeholder {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.21;
-  color: #000;
-}
-
-.input__text::-ms-input-placeholder {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.21;
-  color: #000;
-}
 
 @media all and (max-width: 719px) {
   .input__text {
@@ -579,8 +553,9 @@ max-width: 330px;
 }
 
 .popup__save-button {
-  margin: 48px 0 0;
+  margin-top: 26px;
   background-color: #000;
+  border-color: #000;
   border-radius: 2px;
   color: #fff;
   font-weight: 400;
