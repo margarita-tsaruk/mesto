@@ -1,0 +1,24 @@
+.elements {
+  margin: 50px auto 0;
+  max-width: 880px;
+}
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+.elements {
+    margin: 36px auto 0;
+    max-width: 660px;
+ } 
+}
+
+@media all and (min-width: 385px) and (max-width: 719px) {
+  .elements {
+    margin: 36px 15px 0; 
+  }
+}
+
+@media all and (max-width: 384px) {
+  .elements {
+    margin: 36px 19px 0;
+     
+  }
+}

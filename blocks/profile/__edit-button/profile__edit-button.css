@@ -1,0 +1,19 @@
+.profile__edit-button {
+  grid-area: edit-button;
+  max-width: 24px;
+  align-self: end;
+  transition-property: opacity;
+  transition-duration: 1s;
+  transition-timing-function: linear;
+}
+  
+.profile__edit-button:hover {
+  opacity: .5;
+}
+
+@media all and (max-width: 719px) {
+  .profile__edit-button {
+    max-width: 18px;
+    margin-right: 20px;
+  }
+}

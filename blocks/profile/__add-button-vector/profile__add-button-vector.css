@@ -1,0 +1,10 @@
+.profile__add-button-vector {
+  width: 22px;
+  color: #fff;
+}
+
+@media all and (max-width: 719px) {
+  .profile__add-button-vector {
+    max-width: 16px;
+  }
+}

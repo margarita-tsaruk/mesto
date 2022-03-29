@@ -1,0 +1,39 @@
+.profile {
+  margin: 40px auto 0;
+  max-width: 880px;
+  min-height: 120px;
+  display: grid;
+  justify-content: start;
+  grid-template-areas: 
+  "avatar info add-button";
+  grid-template-columns: 124px 1fr 1fr;
+	gap: 10px;
+}
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+  .profile {
+    margin: 42px auto 0;
+    max-width: 660px;
+  }
+}
+
+@media all and (min-width: 385px) and (max-width: 719px) {
+  .profile {
+    margin: 42px 15px 0;
+    grid-template-areas:
+    "avatar info"
+    ". add-button";
+  }
+}
+
+@media all and (max-width: 384px) {
+  .profile {
+    grid-template-areas:
+    "avatar"
+    "info"
+    "add-button";
+    margin: 42px 19px 0;
+    grid-template-columns: repeat(auto-fit, minmax(267px, 1fr));
+    grid-template-rows: 120px 116px 50px;
+  }
+}

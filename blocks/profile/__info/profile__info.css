@@ -1,0 +1,39 @@
+.profile__info {
+  grid-area: info;
+  margin: 22px 0 0 30px;
+  display: grid;
+  grid-template-areas: 
+  "name edit-button"
+  "intro   . "; 
+  column-gap: 18px;
+  row-gap: 16px;
+  grid-template-columns: 294px 1fr;
+  grid-template-rows: 39px 1fr;
+}
+
+ @media all and (min-width: 720px) and (max-width: 1024px) {
+  .profile__info  {
+    margin: 22px 0 0;
+  }
+}
+
+@media all and (min-width: 385px) and (max-width: 719px) {
+  .profile__info  {
+    grid-template-columns: 203px 1fr;
+    column-gap: 5px;
+    row-gap: 5px;
+    margin: 0;
+    align-items: center;
+  }
+}
+ 
+@media all and (max-width: 384px) {
+  .profile__info  {
+    margin: 26px 0 36px 0;
+    justify-content: center;
+    column-gap: 10px;
+    row-gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(232px, 1fr));
+    grid-template-rows: 26px 1fr;
+  }
+}
