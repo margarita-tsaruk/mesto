@@ -6,12 +6,19 @@
   transition-duration: 1s;
   transition-timing-function: linear;
 }
-  
+
 .profile__edit-button:hover {
   opacity: .5;
 }
 
-@media all and (max-width: 719px) {
+@media all and (min-width: 385px) and (max-width: 719px) {
+  .profile__edit-button {
+    align-self: center;
+    max-width: 20px;
+  }
+}
+
+@media all and (max-width: 384px) {
   .profile__edit-button {
     max-width: 18px;
     margin-right: 20px;

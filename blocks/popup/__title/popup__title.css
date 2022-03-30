@@ -5,11 +5,11 @@
   margin: 0;
   max-width: 330px;
 }
-    
-@media all and (max-width: 719px) {
+
+@media all and (max-width: 384px) {
   .popup__title {
     max-width: 238px;
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.22;
   }
 }

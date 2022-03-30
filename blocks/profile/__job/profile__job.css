@@ -9,6 +9,12 @@
   justify-self: start;
 }
 
+@media all and (max-width: 719px) {
+  .profile__job {
+    font-size: 14px;
+  }
+}
+
 @media all and (max-width: 384px) {
   .profile__job {
     font-size: 14px;

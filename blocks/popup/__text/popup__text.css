@@ -6,11 +6,15 @@
   min-height: 36px;
   outline-color: #1599df;
   padding: 0;
+  margin-bottom: 30px;
   font-size: 14px;
   font-weight: normal;
 }
-  
-  
+
+.popup__text:last-of-type {
+  margin-bottom: 0;
+}
+
 @media all and (max-width: 719px) {
   .popup__text {
     padding-bottom: 7px;

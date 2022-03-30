@@ -10,11 +10,12 @@
   padding: 34px 36px 37px;
   margin: 195px auto;
 }
-   
-@media all and (max-width: 719px) {
+
+@media all and (max-width: 384px) {
   .popup__content {
-    max-width: 282px;
+    max-width: 267px;
     max-height: 322px;
     padding: 25px 22px;
+    margin: 123px auto;
   }
 }
