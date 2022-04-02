@@ -1,7 +1,15 @@
 .profile__edit-button {
   grid-area: edit-button;
-  max-width: 24px;
+  width: 24px;
+  height: 24px;
   align-self: end;
+  padding-bottom: 9px;
+  background: transparent url(../../../images/ProfileEditIcon.svg) center no-repeat;
+  background-size: 10px;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+  margin-bottom: 9px;
+  cursor: pointer;
   transition-property: opacity;
   transition-duration: 1s;
   transition-timing-function: linear;
@@ -14,13 +22,15 @@
 @media all and (min-width: 385px) and (max-width: 719px) {
   .profile__edit-button {
     align-self: center;
-    max-width: 20px;
   }
 }
 
 @media all and (max-width: 384px) {
   .profile__edit-button {
-    max-width: 18px;
+    width: 18px;
+    height: 18px;
     margin-right: 20px;
+    margin-bottom: 7px;
+    background-size: 8px;
   }
 }

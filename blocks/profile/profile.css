@@ -1,29 +1,27 @@
 .profile {
   margin: 40px auto 0;
   max-width: 880px;
-  min-height: 120px;
   display: grid;
   justify-content: start;
   grid-template-areas:
   "avatar info add-button";
-  grid-template-columns: 124px 1fr 1fr;
-	gap: 10px;
+  grid-template-columns: max-content 1fr max-content;
+	column-gap: 30px;
 }
 
 @media all and (min-width: 720px) and (max-width: 1024px) {
   .profile {
-    margin: 42px auto 0;
     max-width: 660px;
   }
 }
 
 @media all and (min-width: 385px) and (max-width: 719px) {
   .profile {
-    margin: 42px 15px 0;
     grid-template-areas:
     "avatar info"
     ". add-button";
-    grid-template-columns: 123px 180px 1fr;
+    grid-template-columns: 123px max-content;
+    padding: 0 19px;
   }
 }
 

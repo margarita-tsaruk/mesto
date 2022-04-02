@@ -3,12 +3,16 @@
   min-height: 50px;
   min-width: 150px;
   border: 2px solid #fff;
-  background-position: center;
-  background-color: #000;
+  background: transparent url(../../../images/AddToIcon.svg) center no-repeat;
+  background-size: 22px;
+  box-sizing: border-box;
+  cursor: pointer;
   margin: 0;
   padding: 0;
-  align-self: center;
+  width: 22px;
+  height: 22px;
   justify-self: end;
+  align-self: center;
   transition-property: opacity;
   transition-duration: 1s;
   transition-timing-function: linear;
@@ -29,6 +33,7 @@
 
 @media all and (max-width: 384px) {
   .profile__add-button {
+    background-size: 16px;
     width: 100%;
   }
 }

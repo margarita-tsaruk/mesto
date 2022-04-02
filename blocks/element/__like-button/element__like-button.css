@@ -2,7 +2,7 @@
   grid-area: button;
   padding: 0;
   margin: 0 20px 0 0;
-  background: url(../../../images/Like.png);
+  background: url(../../../images/Like.svg);
   background-repeat: no-repeat;
   border: none;
   min-width: 22px;
@@ -10,15 +10,15 @@
   justify-self: end;
   align-self: center;
   cursor: pointer;
+  transition-property: opacity;
+  transition-duration: .2s;
+  transition-timing-function: linear;
 }
 
 .element__like-button:hover {
   opacity: .5;
-  transition-property: opacity;
-  transition-duration: 1s;
-  transition-timing-function: linear;
 }
 
 .element__like-button:focus {
-  background: url(../../../images/LikeActive.png);
+  background: url(../../../images/LikeActive.svg);
 }

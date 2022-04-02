@@ -6,7 +6,7 @@
   min-height: 36px;
   outline-color: #1599df;
   padding: 0;
-  margin-bottom: 30px;
+  margin-bottom: 21px;
   font-size: 14px;
   font-weight: normal;
 }
@@ -19,5 +19,6 @@
   .popup__text {
     padding-bottom: 7px;
     min-height: 27px;
+    margin-bottom: 31px;
   }
 }
