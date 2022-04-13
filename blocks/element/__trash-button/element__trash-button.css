@@ -1,21 +1,30 @@
-.element__like-button {
-  grid-area: button;
+.element__trash-button {
   padding: 0;
-  margin: 0 20px 0 0;
-  background-image: url(../../../images/Like.svg);
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  background: url(../../../images/Trash.svg);
   background-repeat: no-repeat;
   background-color: transparent;
   border: none;
-  min-width: 22px;
+  min-width: 18px;
   min-height: 19px;
   justify-self: end;
   align-self: center;
   cursor: pointer;
   transition-property: opacity;
-  transition-duration: .2s;
+  transition-duration: 1s;
   transition-timing-function: linear;
 }
 
-.element__like-button:hover {
+.element__trash-button:hover {
   opacity: .5;
 }
+
+
+
+
+
+
+
+

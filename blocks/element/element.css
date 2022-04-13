@@ -2,17 +2,12 @@
   background-color: #fff;
   border-radius: 10px;
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
   "photo ."
   "heading button";
   grid-template-columns: 214px 1fr;
   column-gap: 10px;
-} 
-
-@media all and (min-width: 385px) and (max-width: 1024px) {
-  .element {
-    grid-template-columns: repeat(auto-fit, minmax(110px, 182px));
-  }
+  position: relative;
 }
 
 @media all and (max-width: 384px) {

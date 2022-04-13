@@ -8,16 +8,10 @@
   column-gap: 17px;
 }
 
-@media all and (min-width: 385px) and (max-width: 1024px) {
-  .elements__area {
-    gap: 8px;
-    grid-template-columns: repeat(auto-fit, minmax(162px, 1fr));
-  }
-}
-
-@media all and (max-width: 384px) {
+@media all and (max-width: 720px) {
   .elements__area {
     gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(267px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(282px, 480px));
+    justify-content: center;
   }
 }
