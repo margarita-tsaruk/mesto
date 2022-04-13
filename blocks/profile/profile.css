@@ -21,6 +21,7 @@
     "avatar info"
     ". add-button";
     padding: 0 19px;
+    column-gap: 10px;
   }
 }
 

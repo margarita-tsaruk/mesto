@@ -20,51 +20,6 @@ const placeImage = document.querySelector('.popup__image');
 const placeCaption= document.querySelector('.popup__caption');
 const popupOpenImageCloseBtn = popupOpenImage.querySelector('.popup__close-button');
 
-function openPopup(popup) {
-  popup.classList.add('popup_visible');
-}
-
-editProfileBtn.addEventListener('click', () => {
-  openPopup(popupEditProfile);
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
-});
-
-addPlaceBtn.addEventListener('click', () => openPopup(popupAddPlace));
-
-function handleOpenImagePopup(openImage) {
-  openPopup(popupOpenImage);
-  placeImage.src = openImage.link;
-  placeImage.alt = openImage.title;
-  placeCaption.textContent = openImage.title;
-}
-
-function closePopup(popup) {
-  popup.classList.remove('popup_visible');
-}
-
-popupEditCloseBtn.addEventListener('click', () => closePopup(popupEditProfile));
-popupAddPlaceCloseBtn.addEventListener('click', () => closePopup(popupAddPlace));
-popupOpenImageCloseBtn.addEventListener('click', () => closePopup(popupOpenImage));
-
-formElement.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-  closePopup(popupEditProfile);
-});
-
-placeForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const titleInput = document.querySelector('.popup__text_type_title');
-  const linkInput = document.querySelector('.popup__text_type_link');
-  const element = getElements({title: titleInput.value, link: linkInput.value});
-  elementsContainer.prepend(element);
-  titleInput.value = '';
-  linkInput.value = '';
-  closePopup(popupAddPlace);
-});
-
 const elements = [
   {
     title: 'Архыз',
@@ -95,43 +50,88 @@ const elements = [
 const elementsContainer = document.querySelector('.elements__area');
 const template = document.querySelector('.template-element');
 
+function openPopup(popup) {
+    popup.classList.add('popup_visible');
+}
+
+editProfileBtn.addEventListener('click', () => {
+    openPopup(popupEditProfile);
+    nameInput.value = profileName.textContent;
+    jobInput.value = profileJob.textContent;
+});
+
+addPlaceBtn.addEventListener('click', () => openPopup(popupAddPlace));
+
+function handleOpenImagePopup(openImage) {
+    openPopup(popupOpenImage);
+    placeImage.src = openImage.link;
+    placeImage.alt = openImage.title;
+    placeCaption.textContent = openImage.title;
+}
+
+function closePopup(popup) {
+    popup.classList.remove('popup_visible');
+}
+
+popupEditCloseBtn.addEventListener('click', () => closePopup(popupEditProfile));
+popupAddPlaceCloseBtn.addEventListener('click', () => closePopup(popupAddPlace));
+popupOpenImageCloseBtn.addEventListener('click', () => closePopup(popupOpenImage));
+
+formElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    profileName.textContent = nameInput.value;
+    profileJob.textContent = jobInput.value;
+    closePopup(popupEditProfile);
+});
+
+placeForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const titleInput = document.querySelector('.popup__text_type_title');
+    const linkInput = document.querySelector('.popup__text_type_link');
+    const element = getElements({title: titleInput.value, link: linkInput.value});
+    elementsContainer.prepend(element);
+    titleInput.value = '';
+    linkInput.value = '';
+    closePopup(popupAddPlace);
+});
+
 function getElements(item) {
-  const getElementTemplate = template.content.cloneNode(true);
-  const elementPhoto = getElementTemplate.querySelector('.element__photo');
-  const elementHeading = getElementTemplate.querySelector('.element__heading');
-  const likePlaceBtn = getElementTemplate.querySelector('.element__like-button');
-  const removePlacedBtn = getElementTemplate.querySelector('.element__trash-button');
+    const getElementTemplate = template.content.cloneNode(true);
+    const elementPhoto = getElementTemplate.querySelector('.element__photo');
+    const elementHeading = getElementTemplate.querySelector('.element__heading');
+    const likePlaceBtn = getElementTemplate.querySelector('.element__like-button');
+    const removePlacedBtn = getElementTemplate.querySelector('.element__trash-button');
 
-  elementHeading.textContent = item.title;
-  elementPhoto.src = item.link;
-  elementPhoto.alt = item.title;
+    elementHeading.textContent = item.title;
+    elementPhoto.src = item.link;
+    elementPhoto.alt = item.title;
 
-  elementPhoto.addEventListener('click', (evt) => {
-    const elementTarget = evt.target;
-    const item = {
-      title: elementTarget.alt,
-      link: elementTarget.src
+    elementPhoto.addEventListener('click', (evt) => {
+        const elementTarget = evt.target;
+        const item = {
+        title: elementTarget.alt,
+        link: elementTarget.src
     };
 
-   handleOpenImagePopup(item);
-  });
+    handleOpenImagePopup(item);
+    });
 
-  likePlaceBtn.addEventListener('click', (evt) => {
-    const eventTarget = evt.target;
-    eventTarget.classList.toggle('element__like-button_active');
-  });
+    likePlaceBtn.addEventListener('click', (evt) => {
+        const eventTarget = evt.target;
+        eventTarget.classList.toggle('element__like-button_active');
+    });
 
-  removePlacedBtn.addEventListener('click', (evt) => {
-    const element = evt.target.closest('.element');
-    element.remove();
-  });
+    removePlacedBtn.addEventListener('click', (evt) => {
+        const element = evt.target.closest('.element');
+        element.remove();
+    });
 
   return getElementTemplate;
 }
 
 function render() {
-  const html = elements.map(getElements);
-  elementsContainer.append(...html);
+    const insertElements = elements.map(getElements);
+    elementsContainer.append(...insertElements);
 }
 
 render();
