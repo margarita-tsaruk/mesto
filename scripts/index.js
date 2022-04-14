@@ -89,9 +89,9 @@ formPlace.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const element = getElements({title: titleInput.value, link: linkInput.value});
     elementsContainer.prepend(element);
+    closePopup(popupAddPlace);
     titleInput.value = '';
     linkInput.value = '';
-    closePopup(popupAddPlace);
 });
 
 function getElements(item) {
@@ -106,9 +106,9 @@ function getElements(item) {
     elementPhoto.alt = item.title;
 
     elementPhoto.addEventListener('click', (evt) => {
-        const elementTarget = evt.target;
-        elementTarget.alt;
-        elementTarget.src;
+        const imageTarget = evt.target;
+        imageTarget.alt;
+        imageTarget.src;
 
     handleOpenImagePopup(item);
 
@@ -120,8 +120,8 @@ function getElements(item) {
     });
 
     elementRemoveBtn.addEventListener('click', (evt) => {
-        const element = evt.target.closest('.element');
-        element.remove();
+        const elementTarget = evt.target.closest('.element');
+        elementTarget.remove();
     });
 
   return elementTemplate;
