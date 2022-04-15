@@ -1,25 +1,25 @@
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
+const popup = document.querySelector('.popup');
+const popupCloseBtns  = document.querySelectorAll('.popup__close-button');
+
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 const popupAddPlace = document.querySelector('.popup_add_place');
 const popupOpenImage = document.querySelector('.popup_open_image');
 
 const popupEditProfileBtn = document.querySelector('.profile__edit-button');
-const popupEditCloseBtn = popupEditProfile.querySelector('.popup__close-button');
-const formProfile = document.querySelector('.popup__container');
+const formProfile = popupEditProfile.querySelector('.popup__container');
 const nameInput = document.querySelector('.popup__text_type_name');
 const jobInput = document.querySelector('.popup__text_type_job');
 
 const popupAddPlaceBtn = document.querySelector('.profile__add-button');
-const popupAddCloseBtn = popupAddPlace.querySelector('.popup__close-button');
 const formPlace = document.querySelector('.popup__container_place_form');
 const titleInput = document.querySelector('.popup__text_type_title');
 const linkInput = document.querySelector('.popup__text_type_link');
 
 const placeImage = document.querySelector('.popup__image');
 const placeCaption= document.querySelector('.popup__caption');
-const popupOpenCloseBtn = popupOpenImage.querySelector('.popup__close-button');
 
 const elements = [
   {
@@ -71,12 +71,13 @@ function handleOpenImagePopup(openImage) {
 }
 
 function closePopup(popup) {
-    popup.classList.remove('popup_visible');
+    popup.classList.toggle('popup_visible');
 }
 
-popupEditCloseBtn.addEventListener('click', () => closePopup(popupEditProfile));
-popupAddCloseBtn.addEventListener('click', () => closePopup(popupAddPlace));
-popupOpenCloseBtn.addEventListener('click', () => closePopup(popupOpenImage));
+popupCloseBtns.forEach((elem) => {
+    elem.addEventListener('click', () => closePopup(elem.closest('.popup')))
+});
+
 
 formProfile.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -106,12 +107,8 @@ function getElements(item) {
     elementPhoto.alt = item.title;
 
     elementPhoto.addEventListener('click', (evt) => {
-        const imageTarget = evt.target;
-        imageTarget.alt;
-        imageTarget.src;
-
-    handleOpenImagePopup(item);
-
+        evt.target;
+        handleOpenImagePopup(item);
     });
 
     elementLikeBtn.addEventListener('click', (evt) => {

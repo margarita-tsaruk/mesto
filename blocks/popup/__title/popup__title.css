@@ -6,7 +6,7 @@
   max-width: 330px;
 }
 
-@media all and (max-width: 384px) {
+@media all and (max-width: 719px) {
   .popup__title {
     max-width: 238px;
     font-size: 18px;
