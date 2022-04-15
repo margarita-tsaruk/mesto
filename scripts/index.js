@@ -14,7 +14,7 @@ const nameInput = document.querySelector('.popup__text_type_name');
 const jobInput = document.querySelector('.popup__text_type_job');
 
 const popupAddPlaceBtn = document.querySelector('.profile__add-button');
-const formPlace = document.querySelector('.popup__container_place_form');
+const formPlace = popupAddPlace.querySelector('.popup__container_place_form');
 const titleInput = document.querySelector('.popup__text_type_title');
 const linkInput = document.querySelector('.popup__text_type_link');
 
