@@ -78,7 +78,6 @@ popupCloseBtns.forEach((elem) => {
     elem.addEventListener('click', () => closePopup(elem.closest('.popup')))
 });
 
-
 formProfile.addEventListener('submit', (evt) => {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
