@@ -35,20 +35,28 @@
         <h3 class="popup__title">Редактировать профиль</h3>
         <form  class="popup__form" name="profile-form" novalidate>
           <input
+            id="name-input"
             type="text"
             name="user-name"
             class="popup__input popup__input_type_name"
             placeholder="Введите имя"
+            minlength="2"
+            maxlength="40"
             required
           >
+          <span class="popup__input-type-error" id="name-input-error"></span>
           <input
+          id="job-input"
             type="text"
             name="user-job"
             class="popup__input popup__input_type_job"
             placeholder="Введите профессию"
+            minlength="2"
+            maxlength="200"
             required
           >
-          <button type="submit" class="popup__save-button">Сохранить</button>
+          <span class="popup__input-type-error" id="job-input-error"></span>
+          <button type="submit" class="popup__button">Сохранить</button>
         </form>
       </div>
     </div>
@@ -58,20 +66,24 @@
         <h3 class="popup__title">Новое место</h3>
         <form name="place-form" class="popup__form" novalidate>
           <input
+          id="title-input"
             type="text"
             name="place-name"
             class="popup__input popup__input_type_title"
             placeholder="Название"
             required
           >
+          <span class="form__input-error" id="title-input-error"></span>
           <input
-            type="text"
+            id="link-input"
+            type="url"
             name="place-link"
             class="popup__input popup__input_type_link"
             placeholder="Ссылка на картинку"
             required
           >
-          <button type="submit" class="popup__save-button">Сохранить</button>
+          <span class="form__input-error" id="link-input-error"></span>
+          <button type="submit" class="popup__button">Сохранить</button>
         </form>
       </div>
     </div>
@@ -93,8 +105,8 @@
       <button type="button" class="element__trash-button"></button>
     </li>
  </template>
- <script src="./scripts/index.js"></script>
  <script src="./scripts/validate.js"></script>
+<script src="./scripts/index.js"></script>
 </body>
 </html>
 
