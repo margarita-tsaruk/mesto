@@ -9,14 +9,14 @@ const popupAddPlace = document.querySelector('.popup_add_place');
 const popupOpenImage = document.querySelector('.popup_open_image');
 
 const popupEditProfileBtn = document.querySelector('.profile__edit-button');
-const formProfile = popupEditProfile.querySelector('.popup__container');
-const nameInput = document.querySelector('.popup__text_type_name');
-const jobInput = document.querySelector('.popup__text_type_job');
+const formProfile = popupEditProfile.querySelector('.popup__form');
+const nameInput = document.querySelector('.popup__input_type_name');
+const jobInput = document.querySelector('.popup__input_type_job');
 
 const popupAddPlaceBtn = document.querySelector('.profile__add-button');
-const formPlace = popupAddPlace.querySelector('.popup__container_place_form');
-const titleInput = document.querySelector('.popup__text_type_title');
-const linkInput = document.querySelector('.popup__text_type_link');
+const formPlace = popupAddPlace.querySelector('.popup__form');
+const titleInput = document.querySelector('.popup__input_type_title');
+const linkInput = document.querySelector('.popup__input_type_link');
 
 const placeImage = document.querySelector('.popup__image');
 const placeCaption= document.querySelector('.popup__caption');
@@ -106,7 +106,6 @@ function getElements(item) {
     elementPhoto.alt = item.title;
 
     elementPhoto.addEventListener('click', (evt) => {
-        evt.target;
         handleOpenImagePopup(item);
     });
 
