@@ -4,9 +4,9 @@ function enableValidation(config) {
   const form = document.querySelector(config.formSelector);
   const inputs = form.querySelectorAll(config.inputSelector);
 
-//  forms.forEach((form) => {
+
 form.addEventListener('submit', (event) => handleFormSubmit(event, form));
-//  })
+
 
   inputs.forEach((element) => {
     element.addEventListener('input', (event) => handleFormInput(event, form, config));
