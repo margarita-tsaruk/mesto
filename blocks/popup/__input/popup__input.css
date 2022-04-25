@@ -16,10 +16,6 @@
   margin-bottom: 0;
 }
 
-.popup__input:invalid {
-  border-bottom: 1px solid #FF0000;
-}
-
 @media all and (max-width: 719px) {
   .popup__input {
     padding-bottom: 7px;

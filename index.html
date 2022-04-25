@@ -78,9 +78,13 @@
               name="place-name"
               class="popup__input popup__input_type_title"
               placeholder="Название"
+              minlength="2"
+              maxlength="30"
               required
             >
-            <span class="popup__input_type_error" id="title-input-error"></span>
+            <div class="popup__span-box">
+             <span class="popup__input_type_error" id="title-input-error"></span>
+            </div>
             <input
               id="link-input"
               type="url"
@@ -89,7 +93,9 @@
               placeholder="Ссылка на картинку"
               required
             >
-            <span class="popup__input_type_error" id="link-input-error"></span>
+            <div class="popup__span-box">
+              <span class="popup__input_type_error" id="link-input-error"></span>
+            </div>
           </fieldset>
           <button type="submit" class="popup__button">Сохранить</button>
         </form>
