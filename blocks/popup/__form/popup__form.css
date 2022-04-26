@@ -3,9 +3,6 @@
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
-  width: 430px;
-  min-height: 330px;
-  padding: 34px 36px 37px;
 }
 
 @media all and (max-width: 719px) {

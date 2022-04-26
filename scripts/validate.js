@@ -58,7 +58,6 @@ function checkInputValidity(formElement, inputElement) {
   } else {
     hideInputError(formElement, inputElement);
   }
-  toggleButton(inputList, buttonElement)
 }
 
 //Показать сообщение об ошибке в полях ввода

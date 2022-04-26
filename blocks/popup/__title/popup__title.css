@@ -4,6 +4,7 @@
   line-height: 1.20;
   margin: 0;
   max-width: 330px;
+  margin: 0 0 50px;
 }
 
 @media all and (max-width: 719px) {

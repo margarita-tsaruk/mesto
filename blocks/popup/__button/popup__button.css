@@ -14,6 +14,7 @@
   transition-property: opacity;
   transition-duration: .2s;
   transition-timing-function: linear;
+  margin-top: 18px;
 }
 
 .popup__button:hover {
