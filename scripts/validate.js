@@ -25,7 +25,7 @@ function setEventListeners(config, formElement) {
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
-      checkInputValidity(config, formElement, inputElement);
+      showErrorMessage(config, formElement, inputElement);
       toggleButton(config, inputList, buttonElement);
     });
  });
@@ -49,8 +49,8 @@ function toggleButton(config, inputList, buttonElement) {
   }
 }
 
-//Проверить полей ввода на валидность
-function checkInputValidity(config, formElement, inputElement) {
+//Показать/скрыть сообщение об ошибке в случае невалидности полей формы
+function showErrorMessage(config, formElement, inputElement) {
   if(!inputElement.validity.valid) {
     showInputError(config, formElement, inputElement, inputElement.validationMessage);
   } else {
@@ -58,7 +58,7 @@ function checkInputValidity(config, formElement, inputElement) {
   }
 }
 
-//Показать сообщение об ошибке в полях ввода
+//Создание функции сообщения об ошибке в полях ввода
 function showInputError(config, formElement, inputElement, errorMessage) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
 
@@ -67,7 +67,7 @@ function showInputError(config, formElement, inputElement, errorMessage) {
   errorElement.classList.add(config.errorClass);
 }
 
-//Скрыть сообщение об ошибке в полях ввода
+//Создание функции скрытия сообщения об ошибке в полях ввода
 function hideInputError(config, formElement, inputElement) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
 

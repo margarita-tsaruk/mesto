@@ -7,11 +7,14 @@
   box-sizing: border-box;
   color: #000;
   outline-color: #1599df;
-  padding: 0 0 10px;
   font-weight: normal;
   font-size: 14px;
   line-height: 1.21;
   margin-bottom: 30px;
+}
+
+.popup__input:last-of-type {
+  margin: 0;
 }
 
 @media all and (max-width: 719px) {

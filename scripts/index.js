@@ -1,7 +1,7 @@
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
-const popup = document.querySelector('.popup');
+const popups = document.querySelectorAll('.popup');
 const popupCloseBtns  = document.querySelectorAll('.popup__close-button');
 
 const popupEditProfile = document.querySelector('.popup_edit_profile');
@@ -20,6 +20,15 @@ const linkInput = document.querySelector('.popup__input_type_link');
 
 const placeImage = document.querySelector('.popup__image');
 const placeCaption= document.querySelector('.popup__caption');
+
+const config = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_invalid',
+  errorClass: 'popup__error_visible',
+};
 
 const elements = [
   {
@@ -56,27 +65,61 @@ function openPopup(popup) {
 }
 
 popupEditProfileBtn.addEventListener('click', () => {
+  const inputList = Array.from(formProfile.querySelectorAll(config.inputSelector));
+  const buttonElement = formProfile.querySelector(config.submitButtonSelector);
+
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
+
+    inputList.forEach((inputElement) => {
+      hideInputError(config, formProfile, inputElement);
+    });
+
+    toggleButton(config, inputList, buttonElement);
+
     openPopup(popupEditProfile);
 });
 
-popupAddPlaceBtn.addEventListener('click', () => openPopup(popupAddPlace));
+popupAddPlaceBtn.addEventListener('click', () => {
+  const inputList = Array.from(formPlace.querySelectorAll(config.inputSelector));
+  const buttonElement = formPlace.querySelector(config.submitButtonSelector);
 
+  inputList.forEach((inputElement) => {
+    hideInputError(config, formPlace, inputElement);
+  });
+
+  toggleButton(config, inputList, buttonElement);
+
+  openPopup(popupAddPlace);
+});
+
+//Открыть модальное окно - фото
 function handleOpenImagePopup(openImage) {
     placeImage.src = openImage.link;
     placeImage.alt = openImage.title;
     placeCaption.textContent = openImage.title;
+
     openPopup(popupOpenImage);
 }
 
+//Закрыть модальные окна (общая функция)
 function closePopup(popup) {
     popup.classList.toggle('popup_visible');
+    formPlace.reset();
 }
 
+//Закрыть модальные окна, нажав на любой .popup__close-button (крестик)
 popupCloseBtns.forEach((elem) => {
-    elem.addEventListener('click', () => closePopup(elem.closest('.popup')))
+    elem.addEventListener('click', () => closePopup(elem.closest('.popup')));
 });
+
+//Закрыть модальные окна, нажав на overlay
+popups.forEach((popup) => {
+    popup.addEventListener('click', (evt) => {
+      if (evt.target === evt.currentTarget) {
+        closePopup(popup);
+    }});
+  });
 
 formProfile.addEventListener('submit', (evt) => {
     evt.preventDefault();
