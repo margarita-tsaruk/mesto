@@ -19,7 +19,7 @@ const formPlace = popupAddPlace.querySelector('.popup__form');
 const titleInput = document.querySelector('.popup__input_type_title');
 const linkInput = document.querySelector('.popup__input_type_link');
 
-//Данные модального окна "Редактрировать профиль"
+//Данные модального окна "Редактировать профиль"
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
@@ -174,7 +174,7 @@ function getElements(item) {
     elementPhoto.alt = item.title;
 
     //Событие: открыть модальное окно с изображением
-    elementPhoto.addEventListener('click', (evt) => {
+    elementPhoto.addEventListener('click', () => {
         handleOpenImagePopup(item);
     });
 
