@@ -1,35 +1,33 @@
-const profileName = document.querySelector('.profile__name');
-const profileJob = document.querySelector('.profile__job');
-
+//Модальные окна
 const popups = document.querySelectorAll('.popup');
-const popupCloseBtns  = document.querySelectorAll('.popup__close-button');
-
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 const popupAddPlace = document.querySelector('.popup_add_place');
 const popupOpenImage = document.querySelector('.popup_open_image');
 
+//Кнопки открытия/закрытия модальных окон
 const popupEditProfileBtn = document.querySelector('.profile__edit-button');
+const popupAddPlaceBtn = document.querySelector('.profile__add-button');
+const popupCloseBtns  = document.querySelectorAll('.popup__close-button');
+
+//Форма "Редактрировать профиль"
 const formProfile = popupEditProfile.querySelector('.popup__form');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_job');
 
-const popupAddPlaceBtn = document.querySelector('.profile__add-button');
+//Форма "Новое место"
 const formPlace = popupAddPlace.querySelector('.popup__form');
 const titleInput = document.querySelector('.popup__input_type_title');
 const linkInput = document.querySelector('.popup__input_type_link');
 
+//Данные модального окна "Редактрировать профиль"
+const profileName = document.querySelector('.profile__name');
+const profileJob = document.querySelector('.profile__job');
+
+//Данные модального окна "Открыть изображение"
 const placeImage = document.querySelector('.popup__image');
 const placeCaption= document.querySelector('.popup__caption');
 
-const config = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_invalid',
-  errorClass: 'popup__error_visible',
-};
-
+//Данные элементов - карточек, существующих на странице
 const elements = [
   {
     title: 'Архыз',
@@ -57,13 +55,27 @@ const elements = [
   }
 ];
 
+//Контейнер для карточек
 const elementsContainer = document.querySelector('.elements__area');
 const template = document.querySelector('.template-element');
 
+//Объект настроек всех нужных функций
+const config = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_invalid',
+  errorClass: 'popup__error_visible'
+};
+
+//Объявление функции: открыть все модальные окна (общая функция)
 function openPopup(popup) {
     popup.classList.add('popup_visible');
+    document.addEventListener('keydown', closePopupviaEsc);
 }
 
+//Событие: открыть модальное окно - "Редактировать профиль"
 popupEditProfileBtn.addEventListener('click', () => {
   const inputList = Array.from(formProfile.querySelectorAll(config.inputSelector));
   const buttonElement = formProfile.querySelector(config.submitButtonSelector);
@@ -80,20 +92,21 @@ popupEditProfileBtn.addEventListener('click', () => {
     openPopup(popupEditProfile);
 });
 
+//Событие: открыть модальное окно - "Новое место"
 popupAddPlaceBtn.addEventListener('click', () => {
   const inputList = Array.from(formPlace.querySelectorAll(config.inputSelector));
   const buttonElement = formPlace.querySelector(config.submitButtonSelector);
 
-  inputList.forEach((inputElement) => {
-    hideInputError(config, formPlace, inputElement);
-  });
+    inputList.forEach((inputElement) => {
+      hideInputError(config, formPlace, inputElement);
+    });
 
-  toggleButton(config, inputList, buttonElement);
+    toggleButton(config, inputList, buttonElement);
 
-  openPopup(popupAddPlace);
+    openPopup(popupAddPlace);
 });
 
-//Открыть модальное окно - фото
+//Объявление функции: открыть модальное окно с изображением
 function handleOpenImagePopup(openImage) {
     placeImage.src = openImage.link;
     placeImage.alt = openImage.title;
@@ -102,25 +115,35 @@ function handleOpenImagePopup(openImage) {
     openPopup(popupOpenImage);
 }
 
-//Закрыть модальные окна (общая функция)
+//Объявление функции: закрыть все модальные окна (общая функция)
 function closePopup(popup) {
     popup.classList.toggle('popup_visible');
+    document.removeEventListener('keydown', closePopupviaEsc);
     formPlace.reset();
 }
 
-//Закрыть модальные окна, нажав на любой .popup__close-button (крестик)
+//Событие: закрыть модальные окна, нажав на кнопку закрытия (крестик)
 popupCloseBtns.forEach((elem) => {
     elem.addEventListener('click', () => closePopup(elem.closest('.popup')));
 });
 
-//Закрыть модальные окна, нажав на overlay
+//Событие: закрыть модальные окна, нажав на overlay
 popups.forEach((popup) => {
     popup.addEventListener('click', (evt) => {
       if (evt.target === evt.currentTarget) {
         closePopup(popup);
     }});
-  });
+});
 
+//Объявление функции: закрыть все модальные окна, нажав на клавишу Escape
+function closePopupviaEsc(evt) {
+    if (evt.key === 'Escape') {
+      const popupVisible = document.querySelector('.popup_visible');
+      closePopup(popupVisible);
+    }
+}
+
+//Событие: отправить форму  модального окна "Редактировать профиль"
 formProfile.addEventListener('submit', (evt) => {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
@@ -128,6 +151,7 @@ formProfile.addEventListener('submit', (evt) => {
     closePopup(popupEditProfile);
 });
 
+//Событие: отправить форму  модального окна "Новое место"
 formPlace.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const element = getElements({title: titleInput.value, link: linkInput.value});
@@ -137,6 +161,7 @@ formPlace.addEventListener('submit', (evt) => {
     linkInput.value = '';
 });
 
+//Объявление функции: создание элемента - карточки (новое место) через <tempalte></template>
 function getElements(item) {
     const elementTemplate = template.content.cloneNode(true);
     const elementPhoto = elementTemplate.querySelector('.element__photo');
@@ -148,15 +173,18 @@ function getElements(item) {
     elementPhoto.src = item.link;
     elementPhoto.alt = item.title;
 
+    //Событие: открыть модальное окно с изображением
     elementPhoto.addEventListener('click', (evt) => {
         handleOpenImagePopup(item);
     });
 
+    //Событие: лайкнуть карточку (новое место)
     elementLikeBtn.addEventListener('click', (evt) => {
         const eventTarget = evt.target;
         eventTarget.classList.toggle('element__like-button_active');
     });
 
+    //Событие: удалить карточку (новое место)
     elementRemoveBtn.addEventListener('click', (evt) => {
         const elementTarget = evt.target.closest('.element');
         elementTarget.remove();
@@ -165,6 +193,7 @@ function getElements(item) {
   return elementTemplate;
 }
 
+//Объявление функции: добавить элемент - карточку (новое место) в контейнер элементов
 function render() {
     const elementsInsert = elements.map(getElements);
     elementsContainer.append(...elementsInsert);
