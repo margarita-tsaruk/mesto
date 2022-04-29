@@ -27,37 +27,11 @@ const profileJob = document.querySelector('.profile__job');
 const placeImage = document.querySelector('.popup__image');
 const placeCaption= document.querySelector('.popup__caption');
 
-//Данные элементов - карточек, существующих на странице
-const elements = [
-  {
-    title: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    title: 'Гора Эльбрус',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    title: 'Домбай',
-    link: 'https://images.unsplash.com/photo-1617911478446-c7f1dd96966e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8JUQwJUI0JUQwJUJFJUQwJUJDJUQwJUIxJUQwJUIwJUQwJUI5fGVufDB8fDB8fA%3D%3D&w=1000&q=80'
-  },
-  {
-    title: 'Осетия',
-    link: 'https://images.unsplash.com/photo-1617310188339-0b50f24b29eb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8JUQwJUJFJUQxJTgxJUQwJUI1JUQxJTgyJUQwJUI4JUQxJThGfGVufDB8fDB8fA%3D%3D&w=1000&q=80'
-  },
-  {
-    title: 'Джилы-Су',
-    link: 'https://images.unsplash.com/photo-1613219281931-34c1ef811769?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fCVEMCVCNCVEMCVCNiVEMCVCOCVEMCVCQiVEMSU4QiUyMCVEMSU4MSVEMSU4M3xlbnwwfHwwfHw%3D&w=1000&q=80'
-  },
-  {
-    title: 'Карачаево-Черкессия',
-    link: 'https://images.unsplash.com/photo-1627329904799-607897b1eb60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8JUQwJUJBJUQwJUIwJUQxJTgwJUQwJUIwJUQxJTg3JUQwJUIwJUQwJUI1JUQwJUIyJUQwJUJFJTIwJUQxJTg3JUQwJUI1JUQxJTgwJUQwJUJBJUQwJUI1JUQxJTgxJUQxJTgxJUQwJUI4JUQxJThGfGVufDB8fDB8fA%3D%3D&w=1000&q=80'
-  }
-];
-
 //Контейнер для карточек
-const elementsContainer = document.querySelector('.elements__area');
-const template = document.querySelector('.template-element');
+const cardsContainer = document.querySelector('.cards__container');
+
+//Темплейт карточки
+const template = document.querySelector('.template-card');
 
 //Объект настроек всех нужных функций
 const config = {
@@ -101,6 +75,8 @@ popupAddPlaceBtn.addEventListener('click', () => {
       hideInputError(config, formPlace, inputElement);
     });
 
+    formPlace.reset();
+
     toggleButton(config, inputList, buttonElement);
 
     openPopup(popupAddPlace);
@@ -119,17 +95,17 @@ function handleOpenImagePopup(openImage) {
 function closePopup(popup) {
     popup.classList.toggle('popup_visible');
     document.removeEventListener('keydown', closePopupviaEsc);
-    formPlace.reset();
 }
 
 //Событие: закрыть модальные окна, нажав на кнопку закрытия (крестик)
 popupCloseBtns.forEach((elem) => {
-    elem.addEventListener('click', () => closePopup(elem.closest('.popup')));
+    elem.addEventListener('click', () =>
+    closePopup(elem.closest('.popup')));
 });
 
 //Событие: закрыть модальные окна, нажав на overlay
 popups.forEach((popup) => {
-    popup.addEventListener('click', (evt) => {
+    popup.addEventListener('mousedown', (evt) => {
       if (evt.target === evt.currentTarget) {
         closePopup(popup);
     }});
@@ -154,49 +130,49 @@ formProfile.addEventListener('submit', (evt) => {
 //Событие: отправить форму  модального окна "Новое место"
 formPlace.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    const element = getElements({title: titleInput.value, link: linkInput.value});
-    elementsContainer.prepend(element);
+    const element = getCard({title: titleInput.value, link: linkInput.value});
+    cardsContainer.prepend(element);
     closePopup(popupAddPlace);
     titleInput.value = '';
     linkInput.value = '';
 });
 
-//Объявление функции: создание элемента - карточки (новое место) через <tempalte></template>
-function getElements(item) {
-    const elementTemplate = template.content.cloneNode(true);
-    const elementPhoto = elementTemplate.querySelector('.element__photo');
-    const elementHeading = elementTemplate.querySelector('.element__heading');
-    const elementLikeBtn = elementTemplate.querySelector('.element__like-button');
-    const elementRemoveBtn = elementTemplate.querySelector('.element__trash-button');
+//Объявление функции: создание карточки (новое место) через <tempalte></template>
+function getCard(item) {
+    const cardTemplate = template.content.cloneNode(true);
+    const cardImage = cardTemplate.querySelector('.card__image');
+    const cardHeading = cardTemplate.querySelector('.card__heading');
+    const cardLikeBtn = cardTemplate.querySelector('.card__like-button');
+    const cardTrashBtn = cardTemplate.querySelector('.card__trash-button');
 
-    elementHeading.textContent = item.title;
-    elementPhoto.src = item.link;
-    elementPhoto.alt = item.title;
+    cardHeading.textContent = item.title;
+    cardImage.src = item.link;
+    cardImage.alt = item.title;
 
     //Событие: открыть модальное окно с изображением
-    elementPhoto.addEventListener('click', () => {
+    cardImage.addEventListener('click', () => {
         handleOpenImagePopup(item);
     });
 
     //Событие: лайкнуть карточку (новое место)
-    elementLikeBtn.addEventListener('click', (evt) => {
+    cardLikeBtn.addEventListener('click', (evt) => {
         const eventTarget = evt.target;
-        eventTarget.classList.toggle('element__like-button_active');
+        eventTarget.classList.toggle('card__like-button_active');
     });
 
     //Событие: удалить карточку (новое место)
-    elementRemoveBtn.addEventListener('click', (evt) => {
-        const elementTarget = evt.target.closest('.element');
-        elementTarget.remove();
+   cardTrashBtn.addEventListener('click', (evt) => {
+        const cardTarget = evt.target.closest('.card');
+        cardTarget.remove();
     });
 
-  return elementTemplate;
+  return cardTemplate;
 }
 
-//Объявление функции: добавить элемент - карточку (новое место) в контейнер элементов
+//Объявление функции: добавить карточку (новое место) в контейнер карточек
 function render() {
-    const elementsInsert = elements.map(getElements);
-    elementsContainer.append(...elementsInsert);
+    const cardsInsert = cards.map(getCard);
+    cardsContainer.append(...cardsInsert);
 }
 
 render();

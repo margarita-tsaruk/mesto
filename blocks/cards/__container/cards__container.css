@@ -1,4 +1,4 @@
-.elements__area {
+.cards__container {
   list-style: none;
   display: grid;
   padding: 0;
@@ -9,7 +9,7 @@
 }
 
 @media all and (max-width: 720px) {
-  .elements__area {
+  .cards__container {
     gap: 20px;
     grid-template-columns: repeat(auto-fit, minmax(282px, 480px));
     justify-content: center;

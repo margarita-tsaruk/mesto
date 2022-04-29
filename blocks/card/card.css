@@ -1,4 +1,4 @@
-.element {
+.card {
   background-color: #fff;
   border-radius: 10px;
   display: grid;
@@ -11,7 +11,7 @@
 }
 
 @media all and (max-width: 384px) {
-  .element {
+  .card {
     grid-template-columns: repeat(auto-fit, minmax(215px, 0));
   }
 }
