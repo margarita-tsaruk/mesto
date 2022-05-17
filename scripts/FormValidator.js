@@ -1,3 +1,4 @@
+/**
 //Объявление функции: создать показ сообщения об ошибке в полях ввода
 function showInputError(config, formElement, inputElement, errorMessage) {
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
@@ -43,10 +44,10 @@ function toggleButton(config, inputList, buttonElement) {
     }
 }
 
-/**
+
  * Объявление функции: добавить слушателя событий всем полям ввода внутри формы
  * @param {HTMLFormform} inputList
- */
+
 function setEventListeners(config, formElement) {
     const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
     const buttonElement = formElement.querySelector(config.submitButtonSelector);
@@ -59,11 +60,11 @@ function setEventListeners(config, formElement) {
     });
 }
 
-/**
+
  * Объявление функции: обработать событие валидации формы
  * @param {SubmitEvent} event
  * @param {HTMLFormform} forms
- */
+
  function enableValidation(config) {
     const forms = Array.from(document.querySelectorAll(config.formSelector));
 
@@ -85,5 +86,28 @@ enableValidation({
   inputErrorClass: 'popup__input_type_invalid',
   errorClass: 'popup__error_visible'
 });
+*/
 
+export class FormValidator {
+_container;
+_onSubmit;
 
+  constructor(selector, onSubmit) {
+    this._container = document.querySelector(selector);
+    this._onSubmit = onSubmit;
+  }
+
+  _handleSublmit(event) {
+    event.preventDefault();
+
+    const input = this._container.querySelector('.popup__form')
+    this._onSubmit(input.value);
+    input.value = '';
+  }
+
+  enableValidation() {
+    this._container.addEventListener('submit', (event) => {
+      this._handleSublmit(event);
+    });
+  }
+}

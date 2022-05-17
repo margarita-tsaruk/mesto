@@ -1,13 +1,32 @@
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+
+
+//Объявление функции: открыть все модальные окна (общая функция)
+export function openPopup(popup) {
+  popup.classList.add('popup_visible');
+  document.addEventListener('keydown', closePopupviaEsc);
+}
+
+//Объявление функции: закрыть все модальные окна (общая функция)
+function closePopup(popup) {
+  popup.classList.toggle('popup_visible');
+  document.removeEventListener('keydown', closePopupviaEsc);
+}
+
+
+
+/**
 //Модальные окна
-const popups = document.querySelectorAll('.popup');
+const popupElement = document.querySelector('.popup');
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 const popupAddPlace = document.querySelector('.popup_add_place');
-const popupOpenImage = document.querySelector('.popup_open_image');
+
 
 //Кнопки открытия/закрытия модальных окон
 const popupEditProfileBtn = document.querySelector('.profile__edit-button');
 const popupAddPlaceBtn = document.querySelector('.profile__add-button');
-const popupCloseBtns  = document.querySelectorAll('.popup__close-button');
+
 
 //Форма "Редактрировать профиль"
 const formProfile = popupEditProfile.querySelector('.popup__form');
@@ -24,7 +43,7 @@ const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
 //Данные модального окна "Открыть изображение"
-const placeImage = document.querySelector('.popup__image');
+
 const placeCaption= document.querySelector('.popup__caption');
 
 //Контейнер для карточек
@@ -43,11 +62,8 @@ const config = {
   errorClass: 'popup__error_visible'
 };
 
-//Объявление функции: открыть все модальные окна (общая функция)
-function openPopup(popup) {
-    popup.classList.add('popup_visible');
-    document.addEventListener('keydown', closePopupviaEsc);
-}
+
+
 
 //Событие: открыть модальное окно - "Редактировать профиль"
 popupEditProfileBtn.addEventListener('click', () => {
@@ -91,11 +107,7 @@ function handleOpenImagePopup(openImage) {
     openPopup(popupOpenImage);
 }
 
-//Объявление функции: закрыть все модальные окна (общая функция)
-function closePopup(popup) {
-    popup.classList.toggle('popup_visible');
-    document.removeEventListener('keydown', closePopupviaEsc);
-}
+
 
 //Событие: закрыть модальные окна, нажав на кнопку закрытия (крестик)
 popupCloseBtns.forEach((elem) => {
@@ -142,7 +154,7 @@ function getCard(item) {
     const cardTemplate = template.content.cloneNode(true);
     const cardImage = cardTemplate.querySelector('.card__image');
     const cardHeading = cardTemplate.querySelector('.card__heading');
-    const cardLikeBtn = cardTemplate.querySelector('.card__like-button');
+
     const cardTrashBtn = cardTemplate.querySelector('.card__trash-button');
 
     cardHeading.textContent = item.title;
@@ -176,4 +188,4 @@ function render() {
 }
 
 render();
-
+*/
