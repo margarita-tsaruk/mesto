@@ -1,21 +1,17 @@
-import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js";
-
 const popups = document.querySelectorAll('.popup');
 const popupCloseBtns  = document.querySelectorAll('.popup__close-button');
 
 //Объявление функции: открыть все модальные окна (общая функция)
-export function openPopup(popup) {
+function openPopup(popup) {
   popup.classList.add('popup_visible');
   document.addEventListener('keydown', closePopupviaEsc);
 }
 
 //Объявление функции: закрыть все модальные окна (общая функция)
-export function closePopup(popup) {
+function closePopup(popup) {
   popup.classList.toggle('popup_visible');
   document.removeEventListener('keydown', closePopupviaEsc);
 }
-
 
 //Событие: закрыть модальные окна, нажав на кнопку закрытия (крестик)
 popupCloseBtns.forEach((elem) => {
@@ -38,3 +34,5 @@ function closePopupviaEsc(evt) {
     closePopup(popupVisible);
   }
 }
+
+export {popupCloseBtns, openPopup, closePopup};

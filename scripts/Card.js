@@ -29,11 +29,8 @@ const items = [
 ];
 
 const popupOpenImage = document.querySelector('.popup_open_image');
-
 const popupImage = document.querySelector('.popup__image');
 const popupImageCaption = document.querySelector('.popup__caption');
-
-
 export class Card {
   constructor(data, cardSelector) {
     this._title = data.title;
@@ -43,7 +40,7 @@ export class Card {
 
   _getTemplate() {
     const cardElement = document
-    .querySelector(this._cardSelector)
+    .querySelector('.template-card')
     .content
     .querySelector('.card')
     .cloneNode(true);
