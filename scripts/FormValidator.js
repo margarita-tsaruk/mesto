@@ -2,8 +2,9 @@ export class FormValidator {
   constructor(config, form) {
    this._config = config;
    this._form = form;
+   this._inputList = Array.from(form.querySelectorAll(config.inputSelector));
+   this._buttonElement = form.querySelector(config.submitButtonSelector);
   }
-
 
   enableValidation() {
     this._form.addEventListener('submit', (event) => {
@@ -14,36 +15,30 @@ export class FormValidator {
   }
 
   _setEventListeners() {
-    const inputList = Array.from(this._form.querySelectorAll(this._config.inputSelector));
-    const buttonElement = this._form.querySelector(this._config.submitButtonSelector);
-
-    this.toggleButton(this._config, inputList, buttonElement);
-
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       this._hideInputError(this._form, inputElement, this._config);
 
       inputElement.addEventListener('input', () => {
-        this.toggleButton(this._config, inputList, buttonElement);
         this._showErrorMessage(this._config, this._form, inputElement);
+        this.toggleButton(this._config, this._inputList, this._buttonElement);
       });
     });
   }
 
-  //Объявление функции: включить и отключить состояние активности кнопки при проверки валидности полей формы
-  toggleButton(config, inputList, buttonElement) {
+  //Объявление публичного метода: включить и отключить состояние активности кнопки при проверки валидности полей формы
+  toggleButton(inputList) {
     if (this._hasInvalidInput(inputList)) {
-      const buttonElement = this._form.querySelector(this._config.submitButtonSelector);
-      buttonElement.classList.add(config.inactiveButtonClass);
-      buttonElement.setAttribute('disabled', 'disabled');
+      this._buttonElement.classList.add('popup__button_disabled');
+      this._buttonElement.setAttribute('disabled', 'disabled');
     } else {
-      buttonElement.classList.remove(config.inactiveButtonClass);
-      buttonElement.removeAttribute('disabled', 'disabled');
+      this._buttonElement.classList.remove('popup__button_disabled');
+      this._buttonElement.removeAttribute('disabled', 'disabled');
     }
   }
 
-  //Объявление функции: проверить невалидность полей ввода (применить функцию если хотя бы 1 поле невалидно)
-    _hasInvalidInput(inputList) {
-      return inputList.some((inputElement) => {
+  //Объявление метода: проверить невалидность полей ввода (применить функцию если хотя бы 1 поле невалидно)
+    _hasInvalidInput() {
+      return this._inputList.some((inputElement) => {
         return !inputElement.validity.valid;
       });
     }
@@ -53,7 +48,7 @@ export class FormValidator {
     if(!inputElement.validity.valid) {
       this._showInputError(formElement, inputElement, inputElement.validationMessage, config);
     } else {
-      this._hideInputError(config, formElement, inputElement);
+      this._hideInputError(formElement, inputElement, config);
     }
   }
 
@@ -68,7 +63,6 @@ export class FormValidator {
 
   //Объявление метода: создать скрытие сообщения об ошибке в полях ввода
   _hideInputError(formElement, inputElement, config) {
-    console.log(formElement);
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
 
     inputElement.classList.remove(config.inputErrorClass);

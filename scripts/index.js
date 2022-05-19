@@ -13,7 +13,7 @@ const config = {
 };
 
 const inputList = Array.from(document.querySelectorAll(config.inputSelector));
-const buttonElement =  Array.from(document.querySelectorAll(config.submitButtonSelector));
+
 
 //Модальные окна
 const popupEditProfile = document.querySelector('.popup_edit_profile');
@@ -41,16 +41,13 @@ const cardsContainer = document.querySelector('.cards__container');
 
 const formProfileValidator = new FormValidator(config, formProfile);
 formProfileValidator.enableValidation();
-formProfileValidator.toggleButton(config, inputList, buttonElement);
 
 const formPlaceValidator = new FormValidator(config, formPlace);
 formPlaceValidator.enableValidation();
-formPlaceValidator.toggleButton(config,  inputList, buttonElement);
 
 //Объявление функции: очистить ошибки в полях ввода
 function handleResetErrors() {
   const errors = Array.from(document.querySelectorAll('.popup__error'));
-
 
   errors.forEach((error) => {
     error.textContent = '';
@@ -68,6 +65,8 @@ popupEditProfileBtn.addEventListener('click', () => {
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
 
+    formProfileValidator.toggleButton();
+
     openPopup(popupEditProfile);
 });
 
@@ -76,6 +75,8 @@ popupAddPlaceBtn.addEventListener('click', () => {
     handleResetErrors();
 
     formPlace.reset();
+
+    formPlaceValidator.toggleButton();
 
     openPopup(popupAddPlace);
 });
