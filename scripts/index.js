@@ -12,6 +12,9 @@ const config = {
   errorClass: 'popup__error_visible'
 };
 
+const inputList = Array.from(document.querySelectorAll(config.inputSelector));
+const buttonElement =  Array.from(document.querySelectorAll(config.submitButtonSelector));
+
 //Модальные окна
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 const popupAddPlace = document.querySelector('.popup_add_place');
@@ -38,7 +41,7 @@ const cardsContainer = document.querySelector('.cards__container');
 
 const formProfileValidator = new FormValidator(config, formProfile);
 formProfileValidator.enableValidation();
-formPlaceValidator.toggleButton(config, inputList, buttonElement);
+formProfileValidator.toggleButton(config, inputList, buttonElement);
 
 const formPlaceValidator = new FormValidator(config, formPlace);
 formPlaceValidator.enableValidation();
@@ -47,7 +50,7 @@ formPlaceValidator.toggleButton(config,  inputList, buttonElement);
 //Объявление функции: очистить ошибки в полях ввода
 function handleResetErrors() {
   const errors = Array.from(document.querySelectorAll('.popup__error'));
-  const inputList = Array.from(document.querySelectorAll(config.inputSelector));
+
 
   errors.forEach((error) => {
     error.textContent = '';

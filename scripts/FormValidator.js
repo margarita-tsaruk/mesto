@@ -4,6 +4,7 @@ export class FormValidator {
    this._form = form;
   }
 
+
   enableValidation() {
     this._form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -16,7 +17,7 @@ export class FormValidator {
     const inputList = Array.from(this._form.querySelectorAll(this._config.inputSelector));
     const buttonElement = this._form.querySelector(this._config.submitButtonSelector);
 
-    this.toggleButton(inputList, buttonElement, this._config);
+    this.toggleButton(this._config, inputList, buttonElement);
 
     inputList.forEach((inputElement) => {
       this._hideInputError(this._form, inputElement, this._config);
@@ -31,6 +32,7 @@ export class FormValidator {
   //Объявление функции: включить и отключить состояние активности кнопки при проверки валидности полей формы
   toggleButton(config, inputList, buttonElement) {
     if (this._hasInvalidInput(inputList)) {
+      const buttonElement = this._form.querySelector(this._config.submitButtonSelector);
       buttonElement.classList.add(config.inactiveButtonClass);
       buttonElement.setAttribute('disabled', 'disabled');
     } else {
@@ -49,14 +51,14 @@ export class FormValidator {
   //Объявление метода: показать/скрыть сообщение об ошибке в случае невалидности полей формы
   _showErrorMessage(config, formElement, inputElement) {
     if(!inputElement.validity.valid) {
-      showInputError(config, formElement, inputElement, inputElement.validationMessage);
+      this._showInputError(formElement, inputElement, inputElement.validationMessage, config);
     } else {
-      hideInputError(config, formElement, inputElement);
+      this._hideInputError(config, formElement, inputElement);
     }
   }
 
 //Объявление метода: создать показ сообщения об ошибке в полях ввода
-  _showInputError(config, formElement, inputElement, errorMessage) {
+  _showInputError(formElement, inputElement, errorMessage, config) {
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
 
     inputElement.classList.add(config.inputErrorClass);
@@ -65,10 +67,11 @@ export class FormValidator {
 }
 
   //Объявление метода: создать скрытие сообщения об ошибке в полях ввода
-  _hideInputError(config, formElement, inputElement) {
+  _hideInputError(formElement, inputElement, config) {
+    console.log(formElement);
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
 
-    inputElement.classList.remove(inputErrorClass);
+    inputElement.classList.remove(config.inputErrorClass);
     errorElement.classList.remove(config.errorClass);
     errorElement.textContent = '';
   }
