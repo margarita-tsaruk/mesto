@@ -2,6 +2,16 @@ import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 import { openPopup, closePopup} from './utils.js'
 
+//Объект настроек всех нужных функций
+const config = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_invalid',
+  errorClass: 'popup__error_visible'
+};
+
 //Модальные окна
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 const popupAddPlace = document.querySelector('.popup_add_place');
@@ -26,22 +36,13 @@ const profileJob = document.querySelector('.profile__job');
 
 const cardsContainer = document.querySelector('.cards__container');
 
-//Объект настроек всех нужных функций
-const config = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_invalid',
-  errorClass: 'popup__error_visible'
-};
-
 const formProfileValidator = new FormValidator(config, formProfile);
 formProfileValidator.enableValidation();
+formPlaceValidator.toggleButton(config, inputList, buttonElement);
 
 const formPlaceValidator = new FormValidator(config, formPlace);
 formPlaceValidator.enableValidation();
-formPlaceValidator.toggleButton();
+formPlaceValidator.toggleButton(config,  inputList, buttonElement);
 
 //Объявление функции: очистить ошибки в полях ввода
 function handleResetErrors() {
@@ -69,14 +70,9 @@ popupEditProfileBtn.addEventListener('click', () => {
 
 //Событие: открыть модальное окно - "Новое место"
 popupAddPlaceBtn.addEventListener('click', () => {
-    const inputList = Array.from(formPlace.querySelectorAll(config.inputSelector));
-    const buttonElement = formPlace.querySelector(config.submitButtonSelector);
-
     handleResetErrors();
 
     formPlace.reset();
-
-    toggleButton(config, inputList, buttonElement);
 
     openPopup(popupAddPlace);
 });
@@ -99,11 +95,7 @@ formPlace.addEventListener('submit', (evt) => {
   closePopup(popupAddPlace);
   titleInput.value = '';
   linkInput.value = '';
-
-
-  element.toggleButton(config, inputList, buttonElement);
 });
-
 
 
 
@@ -176,10 +168,4 @@ popupEditProfileBtn.addEventListener('click', () => {
 
     openPopup(popupEditProfile);
 });
-
-
-
-
-
-
 */
