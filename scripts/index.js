@@ -1,4 +1,5 @@
 import { Card } from './Card.js';
+import { cards } from './cards.js';
 import { FormValidator } from './FormValidator.js';
 import { openPopup, closePopup} from './utils.js'
 
@@ -12,10 +13,7 @@ const config = {
   errorClass: 'popup__error_visible'
 };
 
-const inputList = Array.from(document.querySelectorAll(config.inputSelector));
-
-
-//Модальные окна
+//Модальные окна - "Редактировать профиль" и "Новое место"
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 const popupAddPlace = document.querySelector('.popup_add_place');
 
@@ -23,7 +21,7 @@ const popupAddPlace = document.querySelector('.popup_add_place');
 const popupEditProfileBtn = document.querySelector('.profile__edit-button');
 const popupAddPlaceBtn = document.querySelector('.profile__add-button');
 
-//Форма "Редактрировать профиль"
+//Форма "Редактировать профиль"
 const formProfile = popupEditProfile.querySelector('.popup__form');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_job');
@@ -37,144 +35,79 @@ const linkInput = document.querySelector('.popup__input_type_link');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
+//Темплейт карточки
+const template = document.querySelector('.template-card');
+
+//Контейнер для карточек
 const cardsContainer = document.querySelector('.cards__container');
 
+//Запуск валидации формы "Редактировать профиль"
 const formProfileValidator = new FormValidator(config, formProfile);
 formProfileValidator.enableValidation();
 
+//Запуск валидации формы "Новое место"
 const formPlaceValidator = new FormValidator(config, formPlace);
 formPlaceValidator.enableValidation();
 
+//Объявление функции: создание и добавление карточки (новое место) через <tempalte></template>
+function getCard() {
+    cards.forEach((item) => {
+      const card = new Card(item, template)
+      const cardElement = card.generateCard();
+
+      cardsContainer.append(cardElement);
+    });
+}
+
+getCard();
+
 //Объявление функции: очистить ошибки в полях ввода
 function handleResetErrors() {
-  const errors = Array.from(document.querySelectorAll('.popup__error'));
+    const errors = Array.from(document.querySelectorAll('.popup__error'));
+    const inputList = Array.from(document.querySelectorAll(config.inputSelector));
 
-  errors.forEach((error) => {
-    error.textContent = '';
-  });
+    errors.forEach((error) => {
+      error.textContent = '';
+    });
 
-  inputList.forEach((inputElement) => {
-    inputElement.classList.remove('popup__error_visible');
-  });
+    inputList.forEach((inputElement) => {
+      inputElement.classList.remove('popup__error_visible');
+    });
 }
 
 //Событие: открыть модальное окно - "Редактировать профиль"
 popupEditProfileBtn.addEventListener('click', () => {
     handleResetErrors();
-
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
-
     formProfileValidator.handleHideError();
-
     formProfileValidator.toggleButton();
-
     openPopup(popupEditProfile);
-
-})
+});
 
 //Событие: открыть модальное окно - "Новое место"
 popupAddPlaceBtn.addEventListener('click', () => {
     handleResetErrors();
-
     formPlace.reset();
-
     formPlaceValidator.handleHideError();
-
     formPlaceValidator.toggleButton();
-
     openPopup(popupAddPlace);
 });
 
-
 //Событие: отправить форму  модального окна "Редактировать профиль"
 formProfile.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-  closePopup(popupEditProfile);
+    evt.preventDefault();
+    profileName.textContent = nameInput.value;
+    profileJob.textContent = jobInput.value;
+    closePopup(popupEditProfile);
 });
 
 //Событие: отправить форму  модального окна "Новое место"
 formPlace.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-
-  const element = new Card({title: titleInput.value, link: linkInput.value}).generateCard();
-  cardsContainer.prepend(element);
-  closePopup(popupAddPlace);
-  titleInput.value = '';
-  linkInput.value = '';
+    evt.preventDefault();
+    const element = new Card({title: titleInput.value, link: linkInput.value}, template).generateCard();
+    cardsContainer.prepend(element);
+    closePopup(popupAddPlace);
+    titleInput.value = '';
+    linkInput.value = '';
 });
-
-
-
-
-
-
-/**
-//Объявление функции: открыть модальное окно с изображением
-function handleOpenImagePopup(openImage) {
-    placeImage.src = openImage.link;
-    placeImage.alt = openImage.title;
-    placeCaption.textContent = openImage.title;
-
-    openPopup(popupOpenImage);
-}
-
-//Объявление функции: создание карточки (новое место) через <tempalte></template>
-function getCard(item) {
-    const cardTemplate = template.content.cloneNode(true);
-    const cardImage = cardTemplate.querySelector('.card__image');
-    const cardHeading = cardTemplate.querySelector('.card__heading');
-
-    const cardTrashBtn = cardTemplate.querySelector('.card__trash-button');
-
-    cardHeading.textContent = item.title;
-    cardImage.src = item.link;
-    cardImage.alt = item.title;
-
-    //Событие: открыть модальное окно с изображением
-    cardImage.addEventListener('click', () => {
-        handleOpenImagePopup(item);
-    });
-
-    //Событие: лайкнуть карточку (новое место)
-    cardLikeBtn.addEventListener('click', (evt) => {
-        const eventTarget = evt.target;
-        eventTarget.classList.toggle('card__like-button_active');
-    });
-
-    //Событие: удалить карточку (новое место)
-   cardTrashBtn.addEventListener('click', (evt) => {
-        const cardTarget = evt.target.closest('.card');
-        cardTarget.remove();
-    });
-
-  return cardTemplate;
-}
-
-//Объявление функции: добавить карточку (новое место) в контейнер карточек
-function render() {
-    const cardsInsert = cards.map(getCard);
-    cardsContainer.append(...cardsInsert);
-}
-
-render();
-
-
-popupEditProfileBtn.addEventListener('click', () => {
-  const inputList = Array.from(formProfile.querySelectorAll(config.inputSelector));
-  const buttonElement = formProfile.querySelector(config.submitButtonSelector);
-
-    nameInput.value = profileName.textContent;
-    jobInput.value = profileJob.textContent;
-
-    inputList.forEach((inputElement) => {
-      hideInputError(config, formProfile, inputElement);
-    });
-
-    toggleButton(config, inputList, buttonElement);
-
-    openPopup(popupEditProfile);
-});
-*/
