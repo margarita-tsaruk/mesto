@@ -14,17 +14,6 @@ export class FormValidator {
     this._setEventListeners();
   }
 
-  _setEventListeners() {
-    this._inputList.forEach((inputElement) => {
-      this._hideInputError(this._form, inputElement, this._config);
-
-      inputElement.addEventListener('input', () => {
-        this._showErrorMessage(this._config, this._form, inputElement);
-        this.toggleButton(this._config, this._inputList, this._buttonElement);
-      });
-    });
-  }
-
   //Объявление публичного метода: включить и отключить состояние активности кнопки при проверки валидности полей формы
   toggleButton(inputList) {
     if (this._hasInvalidInput(inputList)) {
@@ -34,6 +23,33 @@ export class FormValidator {
       this._buttonElement.classList.remove('popup__button_disabled');
       this._buttonElement.removeAttribute('disabled', 'disabled');
     }
+  }
+
+  //Объявление публичного метода: скрыть сообщения об ошибке в полях ввода
+  hideInputError(inputElement) {
+    const errorElement = this._form.querySelector(`#${inputElement.id}-error`);
+
+    inputElement.classList.remove(this._config.inputErrorClass);
+    errorElement.classList.remove(this._config.errorClass);
+    errorElement.textContent = '';
+  }
+
+  //Объявление публичного метода: активируем метод hideInputError
+  handleHideError () {
+    this._inputList.forEach((inputElement) => {
+       this.hideInputError(inputElement);
+     });
+  }
+
+  _setEventListeners() {
+    this._inputList.forEach((inputElement) => {
+      this.hideInputError(inputElement, this._form, this._config);
+
+      inputElement.addEventListener('input', () => {
+        this._showErrorMessage(this._config, this._form, inputElement);
+        this.toggleButton(this._config, this._inputList, this._buttonElement);
+      });
+    });
   }
 
   //Объявление метода: проверить невалидность полей ввода (применить функцию если хотя бы 1 поле невалидно)
@@ -48,7 +64,7 @@ export class FormValidator {
     if(!inputElement.validity.valid) {
       this._showInputError(formElement, inputElement, inputElement.validationMessage, config);
     } else {
-      this._hideInputError(formElement, inputElement, config);
+      this.hideInputError(formElement, inputElement, config);
     }
   }
 
@@ -59,16 +75,21 @@ export class FormValidator {
     inputElement.classList.add(config.inputErrorClass);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(config.errorClass);
-}
-
-  //Объявление метода: создать скрытие сообщения об ошибке в полях ввода
-  _hideInputError(formElement, inputElement, config) {
-    const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-
-    inputElement.classList.remove(config.inputErrorClass);
-    errorElement.classList.remove(config.errorClass);
-    errorElement.textContent = '';
   }
 }
 
 
+/**  //Объявление публичного метода: скрытие ошибок в полях ввода
+  hideErrors(inputElement) {
+    const errorElement = this._form.querySelector(`#${inputElement.id}-error`);
+
+    inputElement.classList.remove(this._config.inputErrorClass);
+    errorElement.classList.remove(this._config.errorClass);
+    errorElement.textContent = '';
+  }
+
+  someMethod() {
+    this._inputList.forEach((inputElement) => {
+       this.hideErrors(inputElement);
+     });
+  } */

@@ -65,16 +65,21 @@ popupEditProfileBtn.addEventListener('click', () => {
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
 
+    formProfileValidator.handleHideError();
+
     formProfileValidator.toggleButton();
 
     openPopup(popupEditProfile);
-});
+
+})
 
 //Событие: открыть модальное окно - "Новое место"
 popupAddPlaceBtn.addEventListener('click', () => {
     handleResetErrors();
 
     formPlace.reset();
+
+    formPlaceValidator.handleHideError();
 
     formPlaceValidator.toggleButton();
 
