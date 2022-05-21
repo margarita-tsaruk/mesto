@@ -4,19 +4,18 @@ export class Card {
     this._link = data.link;
     this._templateSelector = templateSelector;
     this._handleOpenPopupImage = handleOpenPopupImage;
-    this._cardImage = document.querySelector('.card__image');
-
   }
 
   //Объявление публичного метода: вернуть готовую разметку со слушателями событий
   generateCard() {
     this._element = this._getTemplate();
+    this._cardImage = this._element.querySelector('.card__image').src = this._link;
+    this._cardTitle = this._element.querySelector('.card__title');
+
+    this._cardTitle.textContent = this._title;
+    this._cardTitle.alt = this._title;
+
     this._setEventListeners();
-
-    this._element.querySelector('.card__heading').textContent = this._title;
-    this._element.querySelector('.card__heading').alt = this._title;
-    this._element.querySelector('.card__image').src = this._link;
-
     return this._element;
   }
 
@@ -39,9 +38,9 @@ export class Card {
     this._element.querySelector('.card__trash-button').addEventListener('click', () => {
       this._handleDeleteCard();
     });
-
-    this._element.querySelector('.card__image').addEventListener('click', () => {
-      this._handleOpenPopupImage(this._title, this._link)
+    console.log(this._cardImage)
+    this._cardImage.addEventListener('click', () => {
+      this._handleOpenPopupImage(title, link)
     });
   }
 

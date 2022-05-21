@@ -6,6 +6,13 @@ export class FormValidator {
    this._buttonElement = form.querySelector(config.submitButtonSelector);
   }
 
+  //Объявление приватного метода: проверить невалидность полей ввода (применить функцию если хотя бы 1 поле невалидно)
+  _hasInvalidInput() {
+    return this._inputList.some((inputElement) => {
+      return !inputElement.validity.valid;
+    });
+  }
+
   //Объявление публичного метода: включить и отключить состояние активности кнопки при проверки валидности полей формы
   toggleButton(inputList) {
     if (this._hasInvalidInput(inputList)) {
@@ -19,19 +26,17 @@ export class FormValidator {
 
   //Объявление приватного метода: создать показ сообщения об ошибке в полях ввода
   _showInputError(config, form, inputElement, errorMessage) {
-    console.log(form);
-    const errorElement = form.querySelector(`#${inputElement.id}-error`);
-    inputElement.classList.add(config.inputErrorClass);
+    const errorElement = this._form.querySelector(`#${inputElement.id}-error`);
+    inputElement.classList.add(this._config.inputErrorClass);
     errorElement.textContent = errorMessage;
-    errorElement.classList.add(config.errorClass);
+    errorElement.classList.add(this._config.errorClass);
   }
 
   //Объявление публичного метода: скрыть сообщения об ошибке в полях ввода
-  hideInputError(config, form, inputElement) {
-    console.log(form);
-    const errorElement = form.querySelector(`#${inputElement.id}-error`);
-    inputElement.classList.remove(config.inputErrorClass);
-    errorElement.classList.remove(config.errorClass);
+  hideInputError(inputElement) {
+    const errorElement = this._form.querySelector(`#${inputElement.id}-error`);
+    inputElement.classList.remove(this._config.inputErrorClass);
+    errorElement.classList.remove(this._config.errorClass);
     errorElement.textContent = '';
   }
 
@@ -40,7 +45,7 @@ export class FormValidator {
     if(!inputElement.validity.valid) {
       this._showInputError(config, form, inputElement, inputElement.validationMessage);
     } else {
-      this.hideInputError(config, form, inputElement);
+      this.hideInputError(inputElement);
     }
   }
 
@@ -54,18 +59,11 @@ export class FormValidator {
   //Объявление приватного метода: добавить слушателя событий всем полям ввода внутри формы
   _setEventListeners(config, form) {
     this._inputList.forEach((inputElement) => {
-      this.hideInputError(config, form, inputElement);
+      this.hideInputError(inputElement);
       inputElement.addEventListener('input', () => {
         this._showErrorMessage(config, form, inputElement);
-        this.toggleButton(this._inputList);
+        this.toggleButton(inputElement);
       });
-    });
-  }
-
-  //Объявление приватного метода: проверить невалидность полей ввода (применить функцию если хотя бы 1 поле невалидно)
-  _hasInvalidInput() {
-    return this._inputList.some((inputElement) => {
-      return !inputElement.validity.valid;
     });
   }
 
@@ -75,6 +73,6 @@ export class FormValidator {
       event.preventDefault();
     });
 
-    this._setEventListeners(this._config, this._form);
+    this._setEventListeners();
   }
 }

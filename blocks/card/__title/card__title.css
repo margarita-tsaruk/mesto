@@ -1,4 +1,4 @@
-.card__heading {
+.card__title {
   grid-area: heading;
   margin: 25px 0 25px 21px;
   font-weight: 900;
@@ -12,7 +12,7 @@
 }
 
 @media all and (min-width: 385px) and (max-width: 1024px) {
-  .card__heading {
+  .card__title {
     margin: 25px 0 31px 15px;
     font-size: 16px;
   }
