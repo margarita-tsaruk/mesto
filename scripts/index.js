@@ -35,8 +35,17 @@ const linkInput = document.querySelector('.popup__input_type_link');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
+//Данные модального окна "Открыть изображение"
+const popupOpenImage = document.querySelector('.popup_open_image');
+const popupImage = document.querySelector('.popup__image');
+const popupImageCaption = document.querySelector('.popup__caption');
+
 //Темплейт карточки
 const template = document.querySelector('.template-card');
+
+//Данные карточки
+const cardImage = document.querySelector('.card__image');
+
 
 //Контейнер для карточек
 const cardsContainer = document.querySelector('.cards__container');
@@ -52,7 +61,7 @@ formPlaceValidator.enableValidation();
 //Объявление функции: создание и добавление карточки (новое место) через <tempalte></template>
 function getCard() {
     cards.forEach((item) => {
-      const card = new Card(item, template)
+      const card = new Card(item, template, handleOpenPopupImage)
       const cardElement = card.generateCard();
 
       cardsContainer.append(cardElement);
@@ -60,6 +69,14 @@ function getCard() {
 }
 
 getCard();
+
+//Объявление функции: открыть модальное окно с изображением
+function handleOpenPopupImage(title, link) {
+  popupImage.src = link;
+  popupImage.alt = title;
+  popupImageCaption.textContent = title;
+  openPopup(popupOpenImage);
+}
 
 //Объявление функции: очистить ошибки в полях ввода
 function handleResetErrors() {
@@ -105,7 +122,7 @@ formProfile.addEventListener('submit', (evt) => {
 //Событие: отправить форму  модального окна "Новое место"
 formPlace.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    const element = new Card({title: titleInput.value, link: linkInput.value}, template).generateCard();
+    const element = new Card({title: titleInput.value, link: linkInput.value}, template, handleOpenPopupImage).generateCard();
     cardsContainer.prepend(element);
     closePopup(popupAddPlace);
     titleInput.value = '';
