@@ -1,9 +1,9 @@
 export class FormValidator {
   constructor(config, form) {
-   this._config = config;
-   this._form = form;
-   this._inputList = Array.from(form.querySelectorAll(config.inputSelector));
-   this._buttonElement = form.querySelector(config.submitButtonSelector);
+    this._config = config;
+    this._form = form;
+    this._inputList = Array.from(form.querySelectorAll(config.inputSelector));
+    this._buttonElement = form.querySelector(config.submitButtonSelector);
   }
 
   //Объявление приватного метода: проверить невалидность полей ввода (применить функцию если хотя бы 1 поле невалидно)

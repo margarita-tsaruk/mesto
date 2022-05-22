@@ -43,10 +43,6 @@ const popupImageCaption = document.querySelector('.popup__caption');
 //Темплейт карточки
 const template = document.querySelector('.template-card');
 
-//Данные карточки
-const cardImage = document.querySelector('.card__image');
-
-
 //Контейнер для карточек
 const cardsContainer = document.querySelector('.cards__container');
 
@@ -58,43 +54,33 @@ formProfileValidator.enableValidation();
 const formPlaceValidator = new FormValidator(config, formPlace);
 formPlaceValidator.enableValidation();
 
-//Объявление функции: создание и добавление карточки (новое место) через <tempalte></template>
-function getCard() {
-    cards.forEach((item) => {
-      const card = new Card(item, template, handleOpenPopupImage)
-      const cardElement = card.generateCard();
+//Объявление функции: создание карточки (новое место)
+function getCard(element, template) {
+    const card = new Card(element, template, handleOpenPopupImage).generateCard();
 
-      cardsContainer.append(cardElement);
-    });
+    return card;
 }
 
-getCard();
+//Объявление функции: добавления карточки (новое место)
+function renderCard() {
+    cards.forEach((item) => {
+    const cardElement = getCard(item, template, handleOpenPopupImage);
+    cardsContainer.append(cardElement);
+  });
+}
+
+renderCard();
 
 //Объявление функции: открыть модальное окно с изображением
 function handleOpenPopupImage(title, link) {
-  popupImage.src = link;
-  popupImage.alt = title;
-  popupImageCaption.textContent = title;
-  openPopup(popupOpenImage);
-}
-
-//Объявление функции: очистить ошибки в полях ввода
-function handleResetErrors() {
-    const errors = Array.from(document.querySelectorAll('.popup__error'));
-    const inputList = Array.from(document.querySelectorAll(config.inputSelector));
-
-    errors.forEach((error) => {
-      error.textContent = '';
-    });
-
-    inputList.forEach((inputElement) => {
-      inputElement.classList.remove('popup__error_visible');
-    });
+    popupImage.src = link;
+    popupImage.alt = title;
+    popupImageCaption.textContent = title;
+    openPopup(popupOpenImage);
 }
 
 //Событие: открыть модальное окно - "Редактировать профиль"
 popupEditProfileBtn.addEventListener('click', () => {
-    handleResetErrors();
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
     formProfileValidator.handleHideError();
@@ -104,7 +90,6 @@ popupEditProfileBtn.addEventListener('click', () => {
 
 //Событие: открыть модальное окно - "Новое место"
 popupAddPlaceBtn.addEventListener('click', () => {
-    handleResetErrors();
     formPlace.reset();
     formPlaceValidator.handleHideError();
     formPlaceValidator.toggleButton();
@@ -122,9 +107,7 @@ formProfile.addEventListener('submit', (evt) => {
 //Событие: отправить форму  модального окна "Новое место"
 formPlace.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    const element = new Card({title: titleInput.value, link: linkInput.value}, template, handleOpenPopupImage).generateCard();
-    cardsContainer.prepend(element);
+    cardsContainer.prepend(getCard({title: titleInput.value, link: linkInput.value}, template, handleOpenPopupImage));
     closePopup(popupAddPlace);
-    titleInput.value = '';
-    linkInput.value = '';
+    formPlace.reset();
 });
