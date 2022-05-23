@@ -8,7 +8,7 @@ export class Card {
 
   //Объявление приватного метода: подготовить темплейт карточки (новое место)
   _getTemplate() {
-    const cardElement = this._templateSelector.content.querySelector('.card').cloneNode(true);
+    const cardElement = document.querySelector(this._templateSelector).content.querySelector('.card').cloneNode(true);
 
     return cardElement;
   }

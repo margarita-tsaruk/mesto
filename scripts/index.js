@@ -40,9 +40,6 @@ const popupOpenImage = document.querySelector('.popup_open_image');
 const popupImage = document.querySelector('.popup__image');
 const popupImageCaption = document.querySelector('.popup__caption');
 
-//Темплейт карточки
-const template = document.querySelector('.template-card');
-
 //Контейнер для карточек
 const cardsContainer = document.querySelector('.cards__container');
 
@@ -55,8 +52,8 @@ const formPlaceValidator = new FormValidator(config, formPlace);
 formPlaceValidator.enableValidation();
 
 //Объявление функции: создание карточки (новое место)
-function getCard(element, template) {
-    const card = new Card(element, template, handleOpenPopupImage).generateCard();
+function getCard(element, templateSelector) {
+  const card = new Card(element, templateSelector, handleOpenPopupImage).generateCard();
 
     return card;
 }
@@ -64,7 +61,8 @@ function getCard(element, template) {
 //Объявление функции: добавления карточки (новое место)
 function renderCard() {
     cards.forEach((item) => {
-    const cardElement = getCard(item, template, handleOpenPopupImage);
+    const cardElement = getCard(item, '.template-card', handleOpenPopupImage);
+
     cardsContainer.append(cardElement);
   });
 }
@@ -107,7 +105,6 @@ formProfile.addEventListener('submit', (evt) => {
 //Событие: отправить форму  модального окна "Новое место"
 formPlace.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    cardsContainer.prepend(getCard({title: titleInput.value, link: linkInput.value}, template, handleOpenPopupImage));
+    cardsContainer.prepend(getCard({title: titleInput.value, link: linkInput.value}, '.template-card', handleOpenPopupImage));
     closePopup(popupAddPlace);
-    formPlace.reset();
 });

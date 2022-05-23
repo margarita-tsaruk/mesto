@@ -14,8 +14,8 @@ export class FormValidator {
   }
 
   //Объявление публичного метода: включить и отключить состояние активности кнопки при проверки валидности полей формы
-  toggleButton(inputList) {
-    if (this._hasInvalidInput(inputList)) {
+  toggleButton() {
+    if (this._hasInvalidInput()) {
       this._buttonElement.classList.add(this._config.inactiveButtonClass);
       this._buttonElement.setAttribute('disabled', 'disabled');
     } else {
@@ -25,7 +25,7 @@ export class FormValidator {
   }
 
   //Объявление приватного метода: создать показ сообщения об ошибке в полях ввода
-  _showInputError(config, form, inputElement, errorMessage) {
+  _showInputError(inputElement, errorMessage) {
     const errorElement = this._form.querySelector(`#${inputElement.id}-error`);
     inputElement.classList.add(this._config.inputErrorClass);
     errorElement.textContent = errorMessage;
@@ -41,9 +41,9 @@ export class FormValidator {
   }
 
   //Объявление приватного метода: показать/скрыть сообщение об ошибке в случае невалидности полей формы
-  _showErrorMessage(config, form, inputElement) {
+  _showErrorMessage(inputElement) {
     if(!inputElement.validity.valid) {
-      this._showInputError(config, form, inputElement, inputElement.validationMessage);
+      this._showInputError(inputElement, inputElement.validationMessage);
     } else {
       this.hideInputError(inputElement);
     }
@@ -57,11 +57,10 @@ export class FormValidator {
   }
 
   //Объявление приватного метода: добавить слушателя событий всем полям ввода внутри формы
-  _setEventListeners(config, form) {
+  _setEventListeners() {
     this._inputList.forEach((inputElement) => {
-      this.hideInputError(inputElement);
       inputElement.addEventListener('input', () => {
-        this._showErrorMessage(config, form, inputElement);
+        this._showErrorMessage(inputElement);
         this.toggleButton(inputElement);
       });
     });
