@@ -1,47 +1,30 @@
-import { Card } from './Card.js';
-import { cards } from './cards.js';
+import Section from './Section.js';
 import { FormValidator } from './FormValidator.js';
 import { openPopup, closePopup} from './utils.js'
+import { config,
+  containerSelector,
+  items,
+  formProfile,
+  formPlace,
+  popupEditProfileBtn,
+  popupAddPlaceBtn,
+  popupAddPlace,
+  nameInput
 
-//Объект настроек всех нужных функций
-const config = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_invalid',
-  errorClass: 'popup__error_visible'
-};
+ } from './utils/constants.js'
+import { Card } from './Card.js';
 
-//Модальные окна - "Редактировать профиль" и "Новое место"
-const popupEditProfile = document.querySelector('.popup_edit_profile');
-const popupAddPlace = document.querySelector('.popup_add_place');
 
-//Кнопки открытия/закрытия модальных окон
-const popupEditProfileBtn = document.querySelector('.profile__edit-button');
-const popupAddPlaceBtn = document.querySelector('.profile__add-button');
-
-//Форма "Редактировать профиль"
-const formProfile = popupEditProfile.querySelector('.popup__form');
-const nameInput = document.querySelector('.popup__input_type_name');
-const jobInput = document.querySelector('.popup__input_type_job');
-
-//Форма "Новое место"
-const formPlace = popupAddPlace.querySelector('.popup__form');
-const titleInput = document.querySelector('.popup__input_type_title');
-const linkInput = document.querySelector('.popup__input_type_link');
-
-//Данные модального окна "Редактировать профиль"
-const profileName = document.querySelector('.profile__name');
-const profileJob = document.querySelector('.profile__job');
-
-//Данные модального окна "Открыть изображение"
-const popupOpenImage = document.querySelector('.popup_open_image');
-const popupImage = document.querySelector('.popup__image');
-const popupImageCaption = document.querySelector('.popup__caption');
-
-//Контейнер для карточек
-const cardsContainer = document.querySelector('.cards__container');
+const cardList = new Section ({
+    data: items,
+    renderer: (item) => {
+      const card = new Card(item, '.template-card', handleOpenPopupImage);
+      const cardElement = card.generateCard();
+      cardList.addItem(cardElement);
+    }
+  },
+ containerSelector
+);
 
 //Запуск валидации формы "Редактировать профиль"
 const formProfileValidator = new FormValidator(config, formProfile);
@@ -51,7 +34,7 @@ formProfileValidator.enableValidation();
 const formPlaceValidator = new FormValidator(config, formPlace);
 formPlaceValidator.enableValidation();
 
-//Объявление функции: создание карточки (новое место)
+/**Объявление функции: создание карточки (новое место)
 function getCard(element, templateSelector) {
   const card = new Card(element, templateSelector, handleOpenPopupImage).generateCard();
 
@@ -68,6 +51,8 @@ function renderCard() {
 }
 
 renderCard();
+
+*/
 
 //Объявление функции: открыть модальное окно с изображением
 function handleOpenPopupImage(title, link) {
