@@ -5,7 +5,7 @@ export default class Section {
   this._container = document.querySelector(containerSelector);
   }
 
-  //Объявление публичного метода: принять DOM-элемент и добить его в контейнер
+  //Объявление публичного метода: принять DOM-элемент и добавить его в контейнер
   addItem(element) {
     this._container.append(element);
   }
@@ -16,10 +16,4 @@ export default class Section {
       this._renderer(item);
     });
   }
-
-
-
-  //clear() {
-  //  this._container.innerHTML = '';
-  // }
 }

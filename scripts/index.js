@@ -1,17 +1,25 @@
-import Section from './Section.js';
-import { FormValidator } from './FormValidator.js';
-import { openPopup, closePopup} from './utils.js'
-import { config,
+import {
+  config,
   containerSelector,
   items,
   formProfile,
   formPlace,
   popupEditProfileBtn,
   popupAddPlaceBtn,
-  popupAddPlace,
-  nameInput
+  profileName,
+  profileJob,
+  nameInput,
+  jobInput,
+  popupImage,
+  popupImageCaption,
 
  } from './utils/constants.js'
+
+import Section from './Section.js';
+import PopupWithForm from './PopupWithForm.js';
+import { FormValidator } from './FormValidator.js';
+//import { openPopup, closePopup} from './utils.js'
+
 import { Card } from './Card.js';
 
 
@@ -25,6 +33,25 @@ const cardList = new Section ({
   },
  containerSelector
 );
+
+cardList.renderItems();
+
+
+const popupWithForm = new PopupWithForm (popupSelector, {
+    handleFormSubmit: (newCard) => {
+        const cardElement = new Card (newCard)
+
+        cardList.prepend(cardElement.generateCard());
+    }
+  }
+)
+
+popupWithForm.setEventListeners();
+
+
+
+
+
 
 //Запуск валидации формы "Редактировать профиль"
 const formProfileValidator = new FormValidator(config, formProfile);
@@ -59,7 +86,7 @@ function handleOpenPopupImage(title, link) {
     popupImage.src = link;
     popupImage.alt = title;
     popupImageCaption.textContent = title;
-    openPopup(popupOpenImage);
+    //popupOpen.open(popupOpenImage);
 }
 
 //Событие: открыть модальное окно - "Редактировать профиль"
@@ -68,7 +95,7 @@ popupEditProfileBtn.addEventListener('click', () => {
     jobInput.value = profileJob.textContent;
     formProfileValidator.handleHideError();
     formProfileValidator.toggleButton();
-    openPopup(popupEditProfile);
+    //popupOpenProfile.open();
 });
 
 //Событие: открыть модальное окно - "Новое место"
@@ -76,7 +103,7 @@ popupAddPlaceBtn.addEventListener('click', () => {
     formPlace.reset();
     formPlaceValidator.handleHideError();
     formPlaceValidator.toggleButton();
-    openPopup(popupAddPlace);
+    //popupOpenPlace.open();
 });
 
 //Событие: отправить форму  модального окна "Редактировать профиль"
@@ -84,12 +111,15 @@ formProfile.addEventListener('submit', (evt) => {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
-    closePopup(popupEditProfile);
+    //closePopup(popupEditProfile);
 });
 
 //Событие: отправить форму  модального окна "Новое место"
 formPlace.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    cardsContainer.prepend(getCard({title: titleInput.value, link: linkInput.value}, '.template-card', handleOpenPopupImage));
+    //const card = new Card(item, '.template-card', handleOpenPopupImage);
+    //const cardElement = card.generateCard();
+    //cardList.addItem(cardElement);
+    //cardsContainer.prepend(cardElement({title: titleInput.value, link: linkInput.value}, '.template-card', handleOpenPopupImage));
     closePopup(popupAddPlace);
 });

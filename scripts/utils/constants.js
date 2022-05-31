@@ -1,3 +1,7 @@
+const popupSelector = '.popup';
+export const popup = document.querySelectorAll('.popup');
+//export const popupCloseBtns  = document.querySelectorAll('.popup__close-button');
+
 //Объект настроек всех нужных функций
 export const config = {
   formSelector: '.popup__form',
