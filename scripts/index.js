@@ -22,13 +22,17 @@ import { FormValidator } from './FormValidator.js';
 
 import { Card } from './Card.js';
 
+//Объявление функции: создание карточки (новое место)
+function getCard(item) {
+  const card = new Card(item, '.template-card', handleOpenPopupImage).generateCard();
+
+    return card;
+}
 
 const cardList = new Section ({
     data: items,
     renderer: (item) => {
-      const card = new Card(item, '.template-card', handleOpenPopupImage);
-      const cardElement = card.generateCard();
-      cardList.addItem(cardElement);
+      cardList.addItem(getCard(item));
     }
   },
  containerSelector
@@ -37,11 +41,9 @@ const cardList = new Section ({
 cardList.renderItems();
 
 
-const popupWithForm = new PopupWithForm (popupSelector, {
-    handleFormSubmit: (newCard) => {
-        const cardElement = new Card (newCard)
-
-        cardList.prepend(cardElement.generateCard());
+const popupWithForm = new PopupWithForm ( {
+    handleFormSubmit: (item) => {
+        cardList.addItem(getCard(item));;
     }
   }
 )
@@ -61,13 +63,8 @@ formProfileValidator.enableValidation();
 const formPlaceValidator = new FormValidator(config, formPlace);
 formPlaceValidator.enableValidation();
 
-/**Объявление функции: создание карточки (новое место)
-function getCard(element, templateSelector) {
-  const card = new Card(element, templateSelector, handleOpenPopupImage).generateCard();
 
-    return card;
-}
-
+/**
 //Объявление функции: добавления карточки (новое место)
 function renderCard() {
     cards.forEach((item) => {

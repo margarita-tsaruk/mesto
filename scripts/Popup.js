@@ -1,14 +1,12 @@
 export default class Popup {
   constructor (popupSelector) {
-    console.log(this._popup)
     this._popup = document.querySelectorAll(popupSelector);
-
-    this._closeButton = document.querySelectorAll('.popup__close-button');
+    this._profileEditButton = document.querySelector('.profile__edit-button');
+    this._closeButton = document.querySelector('.popup__close-button');
   }
 
   //Объявление публичного метода: открыть все модальные окна (общая функция)
   open() {
-    console.log(this._popup)
     this._popup.classList.add('popup_visible');
     document.addEventListener('keydown', this.__handleEscClose);
   }
@@ -16,6 +14,7 @@ export default class Popup {
   //Объявление публичного метода: закрыть все модальные окна (общая функция)
   close() {
     this._popup.classList.toggle('popup_visible');
+    this.__handleEscClose.remove();
  }
 
  //Объявление приватного метода: закрыть все модальные окна, нажав на клавишу Escape
@@ -25,11 +24,22 @@ export default class Popup {
     }
   }
 
- //Объявление публичного метода: добавить слушателей событий для закртыия модальных окон
+ //Объявление публичного метода: добавить слушателей событий для закрытия модальных окон
   setEventListeners() {
-    this._closeButton.forEach((elem) => {
-      elem.addEventListener('click', () => {
+    this._profileEditButton.addEventListener('click', () => {
+      this._popup.open();
+    });;
+
+    this._closeButton.addEventListener('click', () => {
         this._popup.close();
+      });
+
+
+    this._popup.forEach((popup) => {
+      popup.addEventListener('mousedown', (evt) => {
+        if (evt.target === evt.currentTarget) {
+          this._popup.close();
+        }
       });
     });
   }
