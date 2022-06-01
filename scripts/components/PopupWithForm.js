@@ -8,6 +8,7 @@ export default class PopupWithForm extends Popup {
     this._inputs = this._form.querySelectorAll('.popup__input');
   }
 
+  //Объявление приватного метода: собрать данные всех полей формы
   _getInputValues() {
     this._inputValues = {};
     this._inputs.forEach((input) => {
@@ -26,9 +27,8 @@ export default class PopupWithForm extends Popup {
     });
   }
 
-  //Объявление публичного метода: закрыть все модальные окна (общая функция)
+  //Объявление публичного метода: закрыть все модальные окна с формой
   close() {
     super.close();
-    this._form.reset();
- }
+  }
 }

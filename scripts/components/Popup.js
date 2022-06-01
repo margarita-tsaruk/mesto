@@ -14,7 +14,7 @@ export default class Popup {
   close() {
     this._popup.classList.remove('popup_visible');
     document.removeEventListener('keydown', (element) => this._handleEscClose(element));
- }
+  }
 
   //Объявление приватного метода: закрыть все модальные окна, нажав на клавишу Escape
   _handleEscClose(evt) {
@@ -24,7 +24,7 @@ export default class Popup {
       }
   }
 
- //Объявление публичного метода: добавить слушателей событий для закрытия модальных окон
+  //Объявление публичного метода: добавить слушателей событий для закрытия модальных окон
   setEventListeners() {
       this._closeButton.addEventListener('click', () => this.close());
       this._popup.addEventListener('click', (event) => {

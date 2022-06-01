@@ -1,40 +1,38 @@
 import {
   config,
   containerSelector,
-  items,
+  cards,
   formProfile,
   formPlace,
   popupEditProfileBtn,
   popupAddPlaceBtn,
   nameInput,
   jobInput,
-  popupImage,
-  popupImageCaption,
 
  } from './utils/constants.js'
 
 import Section from './components/Section.js';
 import PopupWithForm from './components/PopupWithForm.js';
 import UserInfo from './components/UserInfo.js';
-import { FormValidator } from './components/FormValidator.js';
-import { Card } from './components/Card.js';
+import FormValidator from './components/FormValidator.js';
+import Card from './components/Card.js';
+import PopupWithImage from './components/PopupWithImage.js';
 
-//Объявление функции: создание карточки (новое место)
+//Объявление общей функции: создание карточки (новое место)
 function getCard(item) {
-  const card = new Card(item, '.template-card', handleOpenPopupImage).generateCard();
+    const card = new Card(item, '.template-card', { handleOpenPopupImage: (title, link) => {
+      popupImage.open(title, link);
+    }
+  })
 
-    return card;
-}
-//Объявление функции: открыть модальное окно с изображением
-function handleOpenPopupImage(title, link) {
-  popupImage.src = link;
-  popupImage.alt = title;
-  popupImageCaption.textContent = title;
-  //popupOpen.open(popupOpenImage);
+  const cardElement = card.generateCard();
+
+  return cardElement;
 }
 
+//Экземпляр класса, который отвечает за отрисовку элементов на странице
 const cardList = new Section ({
-    data: items,
+    data: cards,
     renderer: (item) => {
       cardList.addItem(getCard(item));
     }
@@ -44,13 +42,20 @@ const cardList = new Section ({
 
 cardList.renderItems();
 
+//Экземпляр класса, который отвечает за модальное окно с изображением
+const popupImage = new PopupWithImage('.popup_open_image');
+popupImage.setEventListeners();
+
+//Экземпляр класса, который отвечает за управление отображением информации о пользователе на странице
 const userInfo = new UserInfo({
   nameSelector: '.profile__name',
   personalInfoSelector: '.profile__job'
 });
 
+//Экземпляр класса, который отвечает за модальное окно "Редактировать профиль"
 const popupEditProfile = new PopupWithForm (
   '.popup_edit_profile', {
+    //Отправить форму  модального окна "Редактировать профиль"
     handleFormSubmit: (value) => {
         userInfo.setUserInfo(value['user-name'], value['user-job'])
 
@@ -59,33 +64,36 @@ const popupEditProfile = new PopupWithForm (
   }
 )
 
+//Экземпляр класса, который отвечает за модальное окно "Новое место"
 const popupAddPlace = new PopupWithForm (
   '.popup_add_place', {
+    //Отправить форму  модального окна "Новое место"
     handleFormSubmit: (inputValues) => {
+      const addCard = new Section ({
+        data: [{
+          title: inputValues['place-name'],
+          link: inputValues['place-link']
+        }],
+        renderer: (item, selector) => {
+          addCard.addItem(getCard(item, selector, {handleOpenPopupImage: (event) => {
+            popupImage.open(event);
+          }}));
+        }
+      }, containerSelector);
 
-    const addCard = new Section ({
-      data: [{
-        title: inputValues['place-name'],
-        link: inputValues['place-link']
-      }],
-      renderer: (item, selector) => {
-        addCard.addItem(getCard(item, selector, handleOpenPopupImage));
-      }
-    }, containerSelector);
-
-  addCard.renderItems();
-  }
+      addCard.renderItems();
+    }
   });
 
-//Запуск валидации формы "Редактировать профиль"
+//Экземпляр класса, который отвечает за запуск валидации формы "Редактировать профиль"
 const formProfileValidator = new FormValidator(config, formProfile);
 formProfileValidator.enableValidation();
 
-//Запуск валидации формы "Новое место"
+//Экземпляр класса, который отвечает за запуск валидации формы "Новое место"
 const formPlaceValidator = new FormValidator(config, formPlace);
 formPlaceValidator.enableValidation();
 
-//Событие: открыть модальное окно - "Редактировать профиль"
+//Обработчик события: открыть модальное окно - "Редактировать профиль"
 popupEditProfileBtn.addEventListener('click', () => {
   const userData = userInfo.getUserInfo();
 
@@ -97,7 +105,7 @@ popupEditProfileBtn.addEventListener('click', () => {
   popupEditProfile.setEventListeners();
 });
 
-//Событие: открыть модальное окно - "Новое место"
+//Обработчик события: открыть модальное окно - "Новое место"
 popupAddPlaceBtn.addEventListener('click', () => {
   formPlace.reset();
   formPlaceValidator.handleHideError();
@@ -105,43 +113,3 @@ popupAddPlaceBtn.addEventListener('click', () => {
   popupAddPlace.open();
   popupAddPlace.setEventListeners();
 });
-
-
-/**
-//Объявление функции: добавления карточки (новое место)
-function renderCard() {
-    cards.forEach((item) => {
-    const cardElement = getCard(item, '.template-card', handleOpenPopupImage);
-
-    cardsContainer.append(cardElement);
-  });
-}
-
-renderCard();
-
-
-
-
-
-
-
-
-
-//Событие: отправить форму  модального окна "Редактировать профиль"
-formProfile.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    profileName.textContent = nameInput.value;
-    profileJob.textContent = jobInput.value;
-    //closePopup(popupEditProfile);
-});
-
-//Событие: отправить форму  модального окна "Новое место"
-formPlace.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    //const card = new Card(item, '.template-card', handleOpenPopupImage);
-    //const cardElement = card.generateCard();
-    //cardList.addItem(cardElement);
-    //cardsContainer.prepend(cardElement({title: titleInput.value, link: linkInput.value}, '.template-card', handleOpenPopupImage));
-    closePopup(popupAddPlace);
-});
-*/

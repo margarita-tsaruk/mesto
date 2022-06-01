@@ -1,4 +1,3 @@
-
 //Объект настроек всех нужных функций
 export const config = {
   formSelector: '.popup__form',
@@ -10,8 +9,8 @@ export const config = {
 };
 
 //Модальные окна - "Редактировать профиль" и "Новое место"
-export const popupEditProfile = document.querySelector('.popup_edit_profile');
-export const popupAddPlace = document.querySelector('.popup_add_place');
+const popupEditProfile = document.querySelector('.popup_edit_profile');
+const popupAddPlace = document.querySelector('.popup_add_place');
 
 //Кнопки открытия/закрытия модальных окон
 export const popupEditProfileBtn = document.querySelector('.profile__edit-button');
@@ -24,20 +23,12 @@ export const jobInput = document.querySelector('.popup__input_type_job');
 
 //Форма "Новое место"
 export const formPlace = popupAddPlace.querySelector('.popup__form');
-export const titleInput = document.querySelector('.popup__input_type_title');
-export const linkInput = document.querySelector('.popup__input_type_link');
 
-//Данные модального окна "Открыть изображение"
-export const popupOpenImage = document.querySelector('.popup_open_image');
-export const popupImage = document.querySelector('.popup__image');
-export const popupImageCaption = document.querySelector('.popup__caption');
-
-export const containerSelector = '.cards__container';
 //Контейнер для карточек
-export const cardsContainer = document.querySelector('.cards__container');
+export const containerSelector = '.cards__container';
 
 //Данные карточек, существующих на странице
-export const items = [
+export const cards = [
   {
     title: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'

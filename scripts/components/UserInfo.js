@@ -4,6 +4,7 @@ export default class UserInfo {
     this._userPersonalInfo = document.querySelector(personalInfoSelector);
   }
 
+  //Объявление публичного метода: вернуть объект с данными пользователя
   getUserInfo() {
     return {
       userName: this._userName.textContent,
@@ -11,8 +12,10 @@ export default class UserInfo {
     };
   }
 
+  //Объявление публичного метода: принять новые данные пользователя и добавить их на страницу
   setUserInfo(userName, userPersonalInfo) {
     this._userName.textContent = userName;
     this._userPersonalInfo.textContent = userPersonalInfo;
   }
 }
+
