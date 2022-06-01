@@ -7,13 +7,17 @@ export default class Section {
 
   //Объявление публичного метода: принять DOM-элемент и добавить его в контейнер
   addItem(element) {
-    this._container.append(element);
+    if(this._renderedItems.length > 1) {
+      this._container.append(element);
+    } else {
+    this._container.prepend(element);
+    }
   }
 
   //Объявление публичного метода: перебрать массив данных _renderedItems и вызвать addItem
   renderItems() {
     this._renderedItems.forEach((item) => {
-      this._renderer(item);
+      this._renderer(item, '.template-card');
     });
   }
 }

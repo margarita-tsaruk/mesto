@@ -6,8 +6,6 @@ import {
   formPlace,
   popupEditProfileBtn,
   popupAddPlaceBtn,
-  profileName,
-  profileJob,
   nameInput,
   jobInput,
   popupImage,
@@ -15,18 +13,24 @@ import {
 
  } from './utils/constants.js'
 
-import Section from './Section.js';
-import PopupWithForm from './PopupWithForm.js';
-import { FormValidator } from './FormValidator.js';
-//import { openPopup, closePopup} from './utils.js'
-
-import { Card } from './Card.js';
+import Section from './components/Section.js';
+import PopupWithForm from './components/PopupWithForm.js';
+import UserInfo from './components/UserInfo.js';
+import { FormValidator } from './components/FormValidator.js';
+import { Card } from './components/Card.js';
 
 //Объявление функции: создание карточки (новое место)
 function getCard(item) {
   const card = new Card(item, '.template-card', handleOpenPopupImage).generateCard();
 
     return card;
+}
+//Объявление функции: открыть модальное окно с изображением
+function handleOpenPopupImage(title, link) {
+  popupImage.src = link;
+  popupImage.alt = title;
+  popupImageCaption.textContent = title;
+  //popupOpen.open(popupOpenImage);
 }
 
 const cardList = new Section ({
@@ -40,20 +44,38 @@ const cardList = new Section ({
 
 cardList.renderItems();
 
+const userInfo = new UserInfo({
+  nameSelector: '.profile__name',
+  personalInfoSelector: '.profile__job'
+});
 
-const popupWithForm = new PopupWithForm ( {
-    handleFormSubmit: (item) => {
-        cardList.addItem(getCard(item));;
+const popupEditProfile = new PopupWithForm (
+  '.popup_edit_profile', {
+    handleFormSubmit: (value) => {
+        userInfo.setUserInfo(value['user-name'], value['user-job'])
+
+        popupEditProfile.close();
     }
   }
 )
 
-popupWithForm.setEventListeners();
+const popupAddPlace = new PopupWithForm (
+  '.popup_add_place', {
+    handleFormSubmit: (inputValues) => {
 
+    const addCard = new Section ({
+      data: [{
+        title: inputValues['place-name'],
+        link: inputValues['place-link']
+      }],
+      renderer: (item, selector) => {
+        addCard.addItem(getCard(item, selector, handleOpenPopupImage));
+      }
+    }, containerSelector);
 
-
-
-
+  addCard.renderItems();
+  }
+  });
 
 //Запуск валидации формы "Редактировать профиль"
 const formProfileValidator = new FormValidator(config, formProfile);
@@ -62,6 +84,27 @@ formProfileValidator.enableValidation();
 //Запуск валидации формы "Новое место"
 const formPlaceValidator = new FormValidator(config, formPlace);
 formPlaceValidator.enableValidation();
+
+//Событие: открыть модальное окно - "Редактировать профиль"
+popupEditProfileBtn.addEventListener('click', () => {
+  const userData = userInfo.getUserInfo();
+
+  nameInput.value = userData.userName;
+  jobInput.value = userData.userPersonalInfo;
+  formProfileValidator.handleHideError();
+  formProfileValidator.toggleButton();
+  popupEditProfile.open();
+  popupEditProfile.setEventListeners();
+});
+
+//Событие: открыть модальное окно - "Новое место"
+popupAddPlaceBtn.addEventListener('click', () => {
+  formPlace.reset();
+  formPlaceValidator.handleHideError();
+  formPlaceValidator.toggleButton();
+  popupAddPlace.open();
+  popupAddPlace.setEventListeners();
+});
 
 
 /**
@@ -76,32 +119,13 @@ function renderCard() {
 
 renderCard();
 
-*/
 
-//Объявление функции: открыть модальное окно с изображением
-function handleOpenPopupImage(title, link) {
-    popupImage.src = link;
-    popupImage.alt = title;
-    popupImageCaption.textContent = title;
-    //popupOpen.open(popupOpenImage);
-}
 
-//Событие: открыть модальное окно - "Редактировать профиль"
-popupEditProfileBtn.addEventListener('click', () => {
-    nameInput.value = profileName.textContent;
-    jobInput.value = profileJob.textContent;
-    formProfileValidator.handleHideError();
-    formProfileValidator.toggleButton();
-    //popupOpenProfile.open();
-});
 
-//Событие: открыть модальное окно - "Новое место"
-popupAddPlaceBtn.addEventListener('click', () => {
-    formPlace.reset();
-    formPlaceValidator.handleHideError();
-    formPlaceValidator.toggleButton();
-    //popupOpenPlace.open();
-});
+
+
+
+
 
 //Событие: отправить форму  модального окна "Редактировать профиль"
 formProfile.addEventListener('submit', (evt) => {
@@ -120,3 +144,4 @@ formPlace.addEventListener('submit', (evt) => {
     //cardsContainer.prepend(cardElement({title: titleInput.value, link: linkInput.value}, '.template-card', handleOpenPopupImage));
     closePopup(popupAddPlace);
 });
+*/

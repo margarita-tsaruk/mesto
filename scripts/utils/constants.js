@@ -1,6 +1,3 @@
-const popupSelector = '.popup';
-export const popup = document.querySelectorAll('.popup');
-//export const popupCloseBtns  = document.querySelectorAll('.popup__close-button');
 
 //Объект настроек всех нужных функций
 export const config = {
@@ -29,10 +26,6 @@ export const jobInput = document.querySelector('.popup__input_type_job');
 export const formPlace = popupAddPlace.querySelector('.popup__form');
 export const titleInput = document.querySelector('.popup__input_type_title');
 export const linkInput = document.querySelector('.popup__input_type_link');
-
-//Данные модального окна "Редактировать профиль"
-export const profileName = document.querySelector('.profile__name');
-export const profileJob = document.querySelector('.profile__job');
 
 //Данные модального окна "Открыть изображение"
 export const popupOpenImage = document.querySelector('.popup_open_image');
