@@ -66,24 +66,20 @@ const popupEditProfile = new PopupWithForm (
 
 //Экземпляр класса, который отвечает за модальное окно "Новое место"
 const popupAddPlace = new PopupWithForm (
-  '.popup_add_place', {
+  '.popup_add_place',
     //Отправить форму  модального окна "Новое место"
-    handleFormSubmit: (inputValues) => {
-      const addCard = new Section ({
-        data: [{
-          title: inputValues['place-name'],
-          link: inputValues['place-link']
-        }],
-        renderer: (item, selector) => {
-          addCard.addItem(getCard(item, selector, {handleOpenPopupImage: (event) => {
-            popupImage.open(event);
-          }}));
+    { handleFormSubmit: (inputValues) => {
+      console.log(inputValues)
+      const cardElement = new Card(inputValues, '.template-card', {handleOpenPopupImage: (event) => {
+        popupImage.open(event);
         }
-      }, containerSelector);
+      }).generateCard()
 
-      addCard.renderItems();
-    }
-  });
+      cardList.addItem(cardElement);
+      }
+    },containerSelector );
+
+  cardList.renderItems();
 
 //Экземпляр класса, который отвечает за запуск валидации формы "Редактировать профиль"
 const formProfileValidator = new FormValidator(config, formProfile);
