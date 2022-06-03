@@ -19,13 +19,10 @@ import Card from './components/Card.js';
 import PopupWithImage from './components/PopupWithImage.js';
 
 //Объявление общей функции: создание карточки (новое место)
-function getCard(item) {
-    const card = new Card(item, '.template-card', { handleOpenPopupImage: (title, link) => {
-      popupImage.open(title, link);
-    }
-  })
+function getCard(title, link, templateSelector, handleCardClick ) {
+    const card = new Card(title, link, templateSelector, handleCardClick)
 
-  const cardElement = card.generateCard();
+    const cardElement = card.generateCard();
 
   return cardElement;
 }
@@ -33,8 +30,11 @@ function getCard(item) {
 //Экземпляр класса, который отвечает за отрисовку элементов на странице
 const cardList = new Section ({
     data: cards,
-    renderer: (item) => {
-      cardList.addItem(getCard(item));
+    renderer: (items) => {
+      cardList.addItem(getCard(items, '.template-card', ({title, link}) => {
+        popupImage.open(title, link)
+      }
+      ));
     }
   },
  containerSelector
@@ -68,14 +68,15 @@ const popupEditProfile = new PopupWithForm (
 const popupAddPlace = new PopupWithForm (
   '.popup_add_place',
     //Отправить форму  модального окна "Новое место"
-    { handleFormSubmit: (inputValues) => {
-      console.log(inputValues)
-      const cardElement = new Card(inputValues, '.template-card', {handleOpenPopupImage: (event) => {
-        popupImage.open(event);
-        }
-      }).generateCard()
+    { handleFormSubmit: (inputsValue) => {
+      //const cardElement = new Card(inputValues, '.template-card', handleOpenPopupImage(title, link)).generateCard();
 
-      cardList.addItem(cardElement);
+      cardList.addItem(getCard(inputsValue, '.template-card',
+      ({title, link}) => {
+        popupImage.open({title, link})
+      }
+
+      ));
       }
     },containerSelector );
 

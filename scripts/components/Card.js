@@ -1,9 +1,10 @@
 export default class Card {
-  constructor(data, templateSelector, { handleOpenPopupImage }) {
+  constructor(data, templateSelector, handleCardClick) {
     this._title = data.title;
     this._link = data.link;
     this._templateSelector = templateSelector;
-    this._handleOpenPopupImage = handleOpenPopupImage;
+    console.log(handleCardClick);
+    this._handleCardClick = handleCardClick;
   }
 
   //Объявление приватного метода: подготовить темплейт карточки (новое место)
@@ -26,7 +27,7 @@ export default class Card {
     });
 
     this._cardImage.addEventListener('click', () => {
-      this._handleOpenPopupImage(this._title, this._link);
+      this._handleCardClick(this._title, this._link);
     });
   }
 
