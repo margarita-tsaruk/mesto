@@ -1,9 +1,8 @@
-export class Card {
-  constructor(data, templateSelector, handleOpenPopupImage) {
-    this._title = data.title;
-    this._link = data.link;
+export default class Card {
+  constructor(data, templateSelector, { handleCardClick }) {
+    this._data = data;
     this._templateSelector = templateSelector;
-    this._handleOpenPopupImage = handleOpenPopupImage;
+    this._handleCardClick = handleCardClick;
   }
 
   //Объявление приватного метода: подготовить темплейт карточки (новое место)
@@ -26,7 +25,7 @@ export class Card {
     });
 
     this._cardImage.addEventListener('click', () => {
-      this._handleOpenPopupImage(this._title, this._link)
+      this._handleCardClick(this._data.title, this._data.link);
     });
   }
 
@@ -46,9 +45,9 @@ export class Card {
     this._cardImage = this._element.querySelector('.card__image');
     this._cardTitle = this._element.querySelector('.card__title');
 
-    this._cardImage.src = this._link;
-    this._cardTitle.textContent = this._title;
-    this._cardTitle.alt = this._title;
+    this._cardImage.src = this._data.link;
+    this._cardTitle.textContent = this._data.title;
+    this._cardTitle.alt = this._data.title;
 
     this._setEventListeners();
 
