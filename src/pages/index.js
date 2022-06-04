@@ -22,8 +22,8 @@ import PopupWithImage from '../scripts/components/PopupWithImage.js';
 
 //Объявление общей функции: создание карточки (новое место)
 function getCard(item) {
-    const card = new Card(item, '.template-card', { handleCardClick: (title, link) => {
-      popupImage.open(title, link);
+    const card = new Card(item, '.template-card', { handleCardClick: (data) => {
+      popupImage.open(data);
     }
   })
 
@@ -67,6 +67,8 @@ const popupEditProfile = new PopupWithForm (
   }
 )
 
+popupEditProfile.setEventListeners();
+
 //Экземпляр класса, который отвечает за модальное окно "Новое место"
 const popupAddPlace = new PopupWithForm (
   '.popup_add_place',
@@ -104,7 +106,6 @@ popupEditProfileBtn.addEventListener('click', () => {
   formProfileValidator.handleHideError();
   formProfileValidator.toggleButton();
   popupEditProfile.open();
-  popupEditProfile.setEventListeners();
 });
 
 //Обработчик события: открыть модальное окно - "Новое место"

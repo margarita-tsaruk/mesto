@@ -17,7 +17,7 @@ export default class Section {
   //Объявление публичного метода: перебрать массив данных
   renderItems() {
     this._renderedItems.forEach((item) => {
-      this._renderer(item, '.template-card');
+      this._renderer(item);
     });
   }
 }
