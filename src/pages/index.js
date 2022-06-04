@@ -114,5 +114,4 @@ popupAddPlaceBtn.addEventListener('click', () => {
   formPlaceValidator.handleHideError();
   formPlaceValidator.toggleButton();
   popupAddPlace.open();
-  //popupAddPlace.setEventListeners();
 });
