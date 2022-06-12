@@ -8,10 +8,10 @@ export default class PopupWithImage extends Popup {
   }
 
   //Объявление публичного метода: вставить в модальное окно картинку с src изображения и подписью к картинке
-  open(title, link) {
-    this._popupImage.src = link;
-    this._popupImage.alt = title;
-    this._popupImageCaption.textContent = title;
+  open(data) {
+    this._popupImage.src = data.link;
+    this._popupImage.alt = data.title;
+    this._popupImageCaption.textContent = data.title;
     super.open();
   }
 }

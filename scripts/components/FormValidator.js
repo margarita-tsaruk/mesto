@@ -61,17 +61,13 @@ export default class FormValidator {
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._showErrorMessage(inputElement);
-        this.toggleButton(inputElement);
+        this.toggleButton();
       });
     });
   }
 
   //Объявление публичного метода: обработать событие валидации формы
   enableValidation() {
-    this._form.addEventListener('submit', (event) => {
-      event.preventDefault();
-    });
-
     this._setEventListeners();
   }
 }

@@ -1,7 +1,9 @@
+
+
 import {
   config,
   containerSelector,
-  cards,
+ // cards,
   formProfile,
   formPlace,
   popupEditProfileBtn,
@@ -17,30 +19,36 @@ import UserInfo from './components/UserInfo.js';
 import FormValidator from './components/FormValidator.js';
 import Card from './components/Card.js';
 import PopupWithImage from './components/PopupWithImage.js';
+import Api from './components/Api.js';
 
 //Объявление общей функции: создание карточки (новое место)
-function getCard(title, link, templateSelector, handleCardClick ) {
-    const card = new Card(title, link, templateSelector, handleCardClick)
+function getCard(item) {
+    const card = new Card(item, '.template-card',
+    { handleCardClick: (data) => {
+      popupImage.open(data);
+    }
+  })
 
-    const cardElement = card.generateCard();
+  const cardElement = card.generateCard();
 
   return cardElement;
 }
 
+
+/**
 //Экземпляр класса, который отвечает за отрисовку элементов на странице
 const cardList = new Section ({
-    data: cards,
-    renderer: (items) => {
-      cardList.addItem(getCard(items, '.template-card', ({title, link}) => {
-        popupImage.open(title, link)
-      }
-      ));
-    }
+  data: cards,
+  renderer: (item) => {
+    cardList.addItem(getCard(item));
+  }
+
   },
- containerSelector
+   containerSelector
 );
 
 cardList.renderItems();
+*/
 
 //Экземпляр класса, который отвечает за модальное окно с изображением
 const popupImage = new PopupWithImage('.popup_open_image');
@@ -63,24 +71,27 @@ const popupEditProfile = new PopupWithForm (
     }
   }
 )
+popupEditProfile.setEventListeners();
 
 //Экземпляр класса, который отвечает за модальное окно "Новое место"
 const popupAddPlace = new PopupWithForm (
   '.popup_add_place',
     //Отправить форму  модального окна "Новое место"
-    { handleFormSubmit: (inputsValue) => {
-      //const cardElement = new Card(inputValues, '.template-card', handleOpenPopupImage(title, link)).generateCard();
+    { handleFormSubmit: (data) => {
 
-      cardList.addItem(getCard(inputsValue, '.template-card',
-      ({title, link}) => {
-        popupImage.open({title, link})
-      }
+    const cardData = {
+      title: data ['place-name'],
+      link: data['place-link']
+    };
 
-      ));
-      }
-    },containerSelector );
+    const cardElement = getCard(cardData);
 
-  cardList.renderItems();
+    cardList.addItemToStart(cardElement);
+
+    }
+});
+
+popupAddPlace.setEventListeners();
 
 //Экземпляр класса, который отвечает за запуск валидации формы "Редактировать профиль"
 const formProfileValidator = new FormValidator(config, formProfile);
@@ -99,7 +110,6 @@ popupEditProfileBtn.addEventListener('click', () => {
   formProfileValidator.handleHideError();
   formProfileValidator.toggleButton();
   popupEditProfile.open();
-  popupEditProfile.setEventListeners();
 });
 
 //Обработчик события: открыть модальное окно - "Новое место"
@@ -108,5 +118,30 @@ popupAddPlaceBtn.addEventListener('click', () => {
   formPlaceValidator.handleHideError();
   formPlaceValidator.toggleButton();
   popupAddPlace.open();
-  popupAddPlace.setEventListeners();
 });
+
+const api = new Api ({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-43/cards',
+  headers: {
+    authorization: 'c58c165d-e00a-4a60-96d3-a5875c524d78',
+    'Content-Type': 'application/json'
+  }
+})
+
+api.getInitialCards()
+  .then((cards) => {
+    const cardList = new Section ({
+      data: cards,
+      renderer: (item) => {
+        cardList.addItem(getCard(item));
+      }
+
+    },
+    containerSelector
+    );
+
+    cardList.renderItems();
+  })
+  .catch((err) => {
+    console.log(err);
+  });

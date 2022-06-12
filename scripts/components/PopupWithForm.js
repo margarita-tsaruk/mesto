@@ -22,13 +22,14 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners();
     this._form.addEventListener('submit', (event) => {
       event.preventDefault();
-      this.close();
       this._handleFormSubmit(this._getInputValues());
+      this.close();
     });
   }
 
   //Объявление публичного метода: закрыть все модальные окна с формой
   close() {
     super.close();
+    this._form.reset();
   }
 }

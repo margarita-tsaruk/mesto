@@ -27,7 +27,7 @@ export const formPlace = popupAddPlace.querySelector('.popup__form');
 //Контейнер для карточек
 export const containerSelector = '.cards__container';
 
-//Данные карточек, существующих на странице
+/** //Данные карточек, существующих на странице
 export const cards = [
   {
     title: 'Архыз',
@@ -54,3 +54,4 @@ export const cards = [
     link: 'https://images.unsplash.com/photo-1627329904799-607897b1eb60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8JUQwJUJBJUQwJUIwJUQxJTgwJUQwJUIwJUQxJTg3JUQwJUIwJUQwJUI1JUQwJUIyJUQwJUJFJTIwJUQxJTg3JUQwJUI1JUQxJTgwJUQwJUJBJUQwJUI1JUQxJTgxJUQxJTgxJUQwJUI4JUQxJThGfGVufDB8fDB8fA%3D%3D&w=1000&q=80'
   }
 ];
+*/
