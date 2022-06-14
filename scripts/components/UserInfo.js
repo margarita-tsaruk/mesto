@@ -4,6 +4,7 @@ export default class UserInfo {
     this._userPersonalInfo = document.querySelector(personalInfoSelector);
   }
 
+  /**
   //Объявление публичного метода: вернуть объект с данными пользователя
   getUserInfo() {
     return {
@@ -19,3 +20,5 @@ export default class UserInfo {
   }
 }
 
+*/
+}

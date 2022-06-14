@@ -1,8 +1,9 @@
 export default class Card {
-  constructor(data, templateSelector, { handleCardClick }) {
+  constructor(data, templateSelector, { handleCardClick }, deleteCardHandler) {
     this._data = data;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._deleteCardHandler = deleteCardHandler;
   }
 
   //Объявление приватного метода: подготовить темплейт карточки (новое место)
@@ -10,6 +11,11 @@ export default class Card {
     const cardElement = document.querySelector(this._templateSelector).content.querySelector('.card').cloneNode(true);
 
     return cardElement;
+  }
+
+  getId() {
+    console.log(this._data._id)
+    return this._data._id;
   }
 
   //Объявление приватного метода: добавить слушателей событий для карточки (новое место)
@@ -21,8 +27,8 @@ export default class Card {
     });
 
     this._element.querySelector('.card__trash-button').addEventListener('click', () => {
-      this._handleDeleteCard();
-      this._element = null;
+        this._deleteCardHandler(this);
+        this._element = null;
     });
 
     this._cardImage.addEventListener('click', () => {
@@ -36,8 +42,8 @@ export default class Card {
   }
 
   //Объявление приватного метода: удалить карточку (новое место)
-  _handleDeleteCard() {
-    this._element.remove();
+  handleDeleteCard() {
+      this._element.remove();
   }
 
   //Объявление публичного метода: вернуть готовую разметку со слушателями событий
@@ -47,8 +53,8 @@ export default class Card {
     this._cardTitle = this._element.querySelector('.card__title');
 
     this._cardImage.src = this._data.link;
-    this._cardTitle.textContent = this._data.title;
-    this._cardTitle.alt = this._data.title;
+    this._cardTitle.textContent = this._data.name;
+    this._cardTitle.alt = this._data.name;
 
     this._setEventListeners();
 
