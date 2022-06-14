@@ -1,6 +1,7 @@
 export default class Api {
   constructor(url) {
     this._url = url;
+
     this._headers = {
       authorization: 'c58c165d-e00a-4a60-96d3-a5875c524d78',
       'Content-Type': 'application/json'
@@ -16,6 +17,7 @@ export default class Api {
 
   getInitialCards() {
    return fetch (`${this._url}/cards`, {
+    method: 'GET',
     headers: this._headers
    })
     .then(res => {
@@ -60,8 +62,8 @@ export default class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify ({
-        name: cardName,
-        link: cardLink
+        name: cardName.name,
+        link: cardLink.link
     })
      .then(res => {
         if (res.ok) {

@@ -21,14 +21,30 @@ import PopupWithImage from './components/PopupWithImage.js';
 import PopupWithConfirmation from './components/PopupWithConfirmation.js';
 import Api from './components/Api.js';
 
+const api = new Api ('https://mesto.nomoreparties.co/v1/cohort-43')
+
+const cardList = new Section (
+  {renderer: (item) => {
+    cardList.addItem(getCard(item));
+  }},
+  containerSelector
+);
+
 function addCardHandler(cardName, cardLink) {
   api.addCard(cardName, cardLink)
+    .then((cards) => {
+      console.log(cards)
+      cardList.renderItems(cards);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function deleteCardHandler(card) {
   api.deleteCard(card.getId())
   .then(() => {
-    task.removeCard()
+    card.removeCard()
   })
   .catch((err) => {
     console.log(err);
@@ -51,22 +67,10 @@ function getCard(item) {
   return cardElement;
 }
 
-const api = new Api ('https://mesto.nomoreparties.co/v1/cohort-43')
-
 api.getInitialCards()
   .then((cards) => {
-    const cardList = new Section ({
-      data: cards,
-      renderer: (item) => {
-        cardList.addItem(getCard(item));
-      }
-
-    },
-    containerSelector
-    );
-
-    cardList.renderItems();
-    })
+    cardList.renderItems(cards);
+  })
   .catch((err) => {
     console.log(err);
   });
@@ -115,9 +119,10 @@ const popupAddPlace = new PopupWithForm (
     //Отправить форму  модального окна "Новое место"
   { handleFormSubmit: (data) => {
       const cardData = {
-        title: data ['place-name'],
+        name: data ['place-name'],
         link: data['place-link']
       };
+
       const cardElement = getCard(cardData);
       cardList.addItemToStart(cardElement);
       }
