@@ -42,16 +42,14 @@ function getCard(item) {
   {handleCardClick: (data) => {
     popupImage.open(data);
     },
-   deleteCardHandler: (cardId) => {
+   deleteCardHandler: (item) => {
     newPopup.open();
     newPopup.setSubmitAction((event) => {
       event.preventDefault();
-      api.deleteCard(cardId)
-        .then((res) => {
-          if(res.ok) {
+      api.deleteCard(card.getId())
+        .then(() => {
             card.handleDeleteCard();
             newPopup.close()
-          }
         })
         .catch((err) => {
           console.log(err);
@@ -66,6 +64,7 @@ const cardElement = card.generateCard();
 
 return cardElement;
 }
+newPopup.setEventListeners();
 
 function addCardHandler(cardData) {
   api.addCard(cardData)

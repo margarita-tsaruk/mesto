@@ -16,6 +16,7 @@ export default class Card {
   //Объявление публичного метода: вернуть готовую разметку со слушателями событий
   generateCard() {
     this._element = this._getTemplate();
+
     this._cardImage = this._element.querySelector('.card__image');
     this._cardTitle = this._element.querySelector('.card__title');
 
@@ -29,6 +30,7 @@ export default class Card {
   }
 
   getId() {
+
     return this._data._id;
   }
 
@@ -46,8 +48,7 @@ export default class Card {
     });
 
     this._element.querySelector('.card__trash-button').addEventListener('click', () => {
-        this._deleteCardHandler(this._data);
-        this._element = null;
+        this._deleteCardHandler(this);
     });
 
     this._cardImage.addEventListener('click', () => {
