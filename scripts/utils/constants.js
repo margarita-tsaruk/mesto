@@ -11,6 +11,7 @@ export const config = {
 //Модальные окна - "Редактировать профиль" и "Новое место"
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 const popupAddPlace = document.querySelector('.popup_add_place');
+export const popupWithConfirmation = document.querySelector('.popup_with_confirmation');
 
 //Кнопки открытия/закрытия модальных окон
 export const popupEditProfileBtn = document.querySelector('.profile__edit-button');

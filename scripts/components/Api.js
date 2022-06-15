@@ -57,25 +57,25 @@ export default class Api {
     })
   }
 
-  addCard(cardName, cardLink) {
+  addCard(cardData) {
     return fetch (`${this._url}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify ({
-        name: cardName.name,
-        link: cardLink.link
+       name: cardData.name,
+       link: cardData.link
+       })
     })
-     .then(res => {
+    .then(res => {
         if (res.ok) {
           return res.json();
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-    })
   }
 
-  deleteCard(_id) {
-    return fetch (`${this._url}/cards/${_id}`, {
+  deleteCard(cardId) {
+    return fetch (`${this._url}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
     })

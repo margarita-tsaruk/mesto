@@ -7,6 +7,7 @@ import {
   formPlace,
   popupEditProfileBtn,
   popupAddPlaceBtn,
+  popupWithConfirmation,
   nameInput,
   jobInput,
 
@@ -30,42 +31,65 @@ const cardList = new Section (
   containerSelector
 );
 
-function addCardHandler(cardName, cardLink) {
-  api.addCard(cardName, cardLink)
-    .then((cards) => {
-      console.log(cards)
-      cardList.renderItems(cards);
+const newPopup = new PopupWithConfirmation (
+  '.popup_with_confirmation',
+)
+
+//Объявление общей функции: создание карточки (новое место)
+function getCard(item) {
+  const card = new Card(
+   item,
+  {handleCardClick: (data) => {
+    popupImage.open(data);
+    },
+   deleteCardHandler: (cardId) => {
+    newPopup.open();
+    newPopup.setSubmitAction((event) => {
+      event.preventDefault();
+      api.deleteCard(cardId)
+        .then((res) => {
+          if(res.ok) {
+            card.handleDeleteCard();
+            newPopup.close()
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      })
+    },
+  },
+  '.template-card'
+)
+
+const cardElement = card.generateCard();
+
+return cardElement;
+}
+
+function addCardHandler(cardData) {
+  api.addCard(cardData)
+    .then((card) => {
+      cardList.addItemToStart(getCard(card));
     })
     .catch((err) => {
       console.log(err);
     });
 }
 
-function deleteCardHandler(card) {
-  api.deleteCard(card.getId())
-  .then(() => {
-    card.removeCard()
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-}
-
-//Объявление общей функции: создание карточки (новое место)
-function getCard(item) {
-    const card = new Card(
-    item,
-    '.template-card',
-    { handleCardClick: (data) => {
-      popupImage.open(data);
-      }
+//Экземпляр класса, который отвечает за модальное окно "Новое место"
+const popupAddPlace = new PopupWithForm (
+  '.popup_add_place',
+    //Отправить форму  модального окна "Новое место"
+    { handleFormSubmit: (data) => {
+      const cardData = {
+        name: data ['place-name'],
+        link: data['place-link']
+      };
+      addCardHandler(cardData)
+      },
     },
-  deleteCardHandler)
-
-  const cardElement = card.generateCard();
-
-  return cardElement;
-}
+);
 
 api.getInitialCards()
   .then((cards) => {
@@ -113,22 +137,7 @@ const popupEditProfile = new PopupWithForm (
 )
 popupEditProfile.setEventListeners();
 
-//Экземпляр класса, который отвечает за модальное окно "Новое место"
-const popupAddPlace = new PopupWithForm (
-  '.popup_add_place',
-    //Отправить форму  модального окна "Новое место"
-  { handleFormSubmit: (data) => {
-      const cardData = {
-        name: data ['place-name'],
-        link: data['place-link']
-      };
 
-      const cardElement = getCard(cardData);
-      cardList.addItemToStart(cardElement);
-      }
-  },
-  addCardHandler
-);
 
 popupAddPlace.setEventListeners();
 

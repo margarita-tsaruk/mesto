@@ -1,9 +1,9 @@
 export default class Card {
-  constructor(data, templateSelector, { handleCardClick }, deleteCardHandler) {
+  constructor(data, { handleCardClick, deleteCardHandler }, templateSelector) {
     this._data = data;
-    this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._deleteCardHandler = deleteCardHandler;
+    this._templateSelector = templateSelector;
   }
 
   //Объявление приватного метода: подготовить темплейт карточки (новое место)
@@ -11,39 +11,6 @@ export default class Card {
     const cardElement = document.querySelector(this._templateSelector).content.querySelector('.card').cloneNode(true);
 
     return cardElement;
-  }
-
-  getId() {
-    console.log(this._data._id)
-    return this._data._id;
-  }
-
-  //Объявление приватного метода: добавить слушателей событий для карточки (новое место)
-  _setEventListeners() {
-    this._buttonLike = this._element.querySelector('.card__like-button');
-
-    this._buttonLike.addEventListener('click', () => {
-      this._handleLikeCard();
-    });
-
-    this._element.querySelector('.card__trash-button').addEventListener('click', () => {
-        this._deleteCardHandler(this);
-        this._element = null;
-    });
-
-    this._cardImage.addEventListener('click', () => {
-      this._handleCardClick(this._data);
-    });
-  }
-
-  //Объявление приватного метода: лайкнуть карточку (новое место)
-  _handleLikeCard() {
-    this._buttonLike.classList.toggle('card__like-button_active');
-  }
-
-  //Объявление приватного метода: удалить карточку (новое место)
-  handleDeleteCard() {
-      this._element.remove();
   }
 
   //Объявление публичного метода: вернуть готовую разметку со слушателями событий
@@ -59,6 +26,38 @@ export default class Card {
     this._setEventListeners();
 
     return this._element;
+  }
+
+  getId() {
+    return this._data._id;
+  }
+
+  //Объявление приватного метода: удалить карточку (новое место)
+  handleDeleteCard() {
+      this._element.remove();
+  }
+
+  //Объявление приватного метода: добавить слушателей событий для карточки (новое место)
+  _setEventListeners() {
+    this._buttonLike = this._element.querySelector('.card__like-button');
+
+    this._buttonLike.addEventListener('click', () => {
+      this._handleLikeCard();
+    });
+
+    this._element.querySelector('.card__trash-button').addEventListener('click', () => {
+        this._deleteCardHandler(this._data);
+        this._element = null;
+    });
+
+    this._cardImage.addEventListener('click', () => {
+      this._handleCardClick(this._data);
+    });
+  }
+
+  //Объявление приватного метода: лайкнуть карточку (новое место)
+  _handleLikeCard() {
+    this._buttonLike.classList.toggle('card__like-button_active');
   }
 }
 

@@ -1,28 +1,23 @@
 import Popup from "./Popup.js";
-
 export default class PopupWithConfirmation extends Popup {
-  constructor ( popupSelector, { handleFormSubmit } ) {
+  constructor ( popupSelector ) {
     super(popupSelector);
-    this._handleFormSubmit = handleFormSubmit;
-    this._button  = this._popup.querySelector('.popup__button');
+    this._form  = this._popup.querySelector('.popup__form');
   }
 
-  setConfirmation() {
 
-  }
 
   //Объявление публичного метода: добавить слушателей событий
   setEventListeners() {
     super.setEventListeners();
-    this._button.addEventListener('submit', (event) => {
+    this._form.addEventListener('submit', (event) => {
       event.preventDefault();
-      this._handleFormSubmit(this._setConfirmation());
-      this.close();
+      this._submitHandler(event);
     });
   }
 
-  //Объявление публичного метода: закрыть все модальные окна с формой
-  close() {
-    super.close();
+  setSubmitAction(submitHandler) {
+      this._submitHandler = submitHandler;
+      console.log(this._submitHandler)
   }
 }
