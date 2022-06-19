@@ -21,31 +21,38 @@ export default class Card {
     }
   }
 
-  _checkLikeOwner() {
-    this._data.likes.forEach((item) => {
+ _checkLikeOwner() {
+  this._data.likes.forEach((item) => {
       if(item._id === this._myId) {
         this._buttonLike.classList.add('card__like-button_active');
       }
     })
   }
 
+  setLikesAmount(object, likesQuantity) {
+    likesQuantity.textContent = object.likes.length;
+    this._buttonLike.classList.add('card__like-button_active')
+  }
+
+  removeLikesAmount(object, likesQuantity) {
+    likesQuantity.textContent = object.likes.length;
+    this._buttonLike.classList.remove('card__like-button_active')
+  }
+
   //Объявление публичного метода: вернуть готовую разметку со слушателями событий
   generateCard() {
     this._element = this._getTemplate();
-
+    this._element.id = this._data._id;
     this._cardImage = this._element.querySelector('.card__image');
     this._cardTitle = this._element.querySelector('.card__title');
     this._buttonLike = this._element.querySelector('.card__like-button');
+    this._likeQuantity = this._element.querySelector('.card__like-quantity');
     this._trashButton = this._element.querySelector('.card__trash-button')
 
-    this._cardImage.src = this._data.link;
-    this._cardTitle.textContent = this._data.name;
-    this._cardTitle.alt = this._data.name;
-
     this._displayTrashButton();
-    this._checkLikeOwner();
+    this._setCardData();
     this._setEventListeners();
-
+    this._checkLikeOwner();
     return this._element;
   }
 
@@ -59,12 +66,17 @@ export default class Card {
       this._element = null;
   }
 
+_setCardData() {
+  this._cardImage.src = this._data.link;
+  this._cardTitle.textContent = this._data.name;
+  this._cardTitle.alt = this._data.name;
+  this._likeQuantity.textContent = this._data.likes.length;
+}
+
   //Объявление приватного метода: добавить слушателей событий для карточки (новое место)
   _setEventListeners() {
     this._buttonLike.addEventListener('click', () => {
-      console.log(this._element)
       this._handleLikeCard(this._element);
-      this._checkLikeOwner();
     });
 
     this._element.querySelector('.card__trash-button').addEventListener('click', () => {

@@ -93,21 +93,21 @@
         </form>
       </div>
   </div>
-  <div class="popup popup_change_avatar popup_visible">
+  <div class="popup popup_change_avatar">
         <div class="popup__content popup__content_modified">
           <button class="popup__close-button" type="button"></button>
           <h3 class="popup__title">Обновить аватар</h3>
           <form class="popup__form" name="avatar-form" novalidate>
             <fieldset class="popup__fieldset">
               <input
-                id="link-input"
+                id="link-avatar"
                 type="url"
-                name="avatar-link"
+                name="link"
                 class="popup__input popup__input_type_link"
-                placeholder="Ссылка на аватар"
+                placeholder="Ссылка на изображение"
                 required
               >
-              <span class="popup__error popup__error_top" id="title-input-error"></span>
+              <span class="popup__error popup__error_top" id="link-avatar-error"></span>
             </fieldset>
             <button type="submit" class="popup__button">Сохранить</button>
           </form>

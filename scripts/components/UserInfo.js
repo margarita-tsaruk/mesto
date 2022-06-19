@@ -6,7 +6,7 @@ export default class UserInfo {
   }
 
   //Объявление публичного метода: вернуть объект с данными пользователя
-  getUserInfo() {
+  returnUserInfo() {
     return {
       userName: this._userName.textContent,
       userPersonalInfo: this._userPersonalInfo.textContent,

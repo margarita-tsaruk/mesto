@@ -7,31 +7,37 @@ export default class Api {
     }
   }
 
+  //Объявление приватного метода: получение ответа от сервера
+  _getServerResponse(res) {
+    if(res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
+  }
+
+  //Объявление публичного метода: отправить запрос серверу - загрузить карточки
+  getInitialCards() {
+    return fetch (`${this._url}/cards`, {
+     method: 'GET',
+     headers: this._headers
+    })
+     .then((res) => {
+      return this._getServerResponse(res)
+    })
+  }
+
+  //Объявление публичного метода: отправить запрос серверу - загрузить информацию о пользователе
   getUserInfo() {
     return fetch (`${this._url}/users/me`, {
       headers: this._headers
      })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then((res) => {
+      return this._getServerResponse(res)
+    })
   }
 
-  getInitialCards() {
-   return fetch (`${this._url}/cards`, {
-    method: 'GET',
-    headers: this._headers
-   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
-  }
-
+  //Объявление публичного метода: отправить запрос серверу на обновление данных профиля пользователя
   editUserInfo(name, about) {
     return fetch (`${this._url}/users/me`, {
       method: 'PATCH',
@@ -41,17 +47,12 @@ export default class Api {
         about: about
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .then((result) => {
-        return result;
-      })
+    .then((res) => {
+      return this._getServerResponse(res)
+    })
   }
 
+  //Объявление публичного метода: отправить запрос серверу на добавление новой карточки
   addCard(cardData) {
     return fetch (`${this._url}/cards`, {
       method: 'POST',
@@ -61,66 +62,55 @@ export default class Api {
        link: cardData.link
        })
     })
-    .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    .then((res) => {
+      return this._getServerResponse(res)
+    })
   }
 
+  //Объявление публичного метода: отправить запрос серверу на удаление своей карточки
   deleteCard(_id) {
     return fetch (`${this._url}/cards/${_id}`, {
       method: 'DELETE',
       headers: this._headers,
     })
-     .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-  }
-
-  changeAvatar() {
-    return fetch (`${this._url}/users/me/avatar`, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify ({
-        avatar: 'url',
-    })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    .then((res) => {
+      return this._getServerResponse(res)
     })
   }
 
+  //Объявление публичного метода: отправить запрос серверу - поставить лайк карточки
   setLikeCard(_id) {
     return fetch (`${this._url}/cards/${_id}/likes`, {
       method: 'PUT',
       headers: this._headers,
     })
-     .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    .then((res) => {
+      return this._getServerResponse(res)
+    })
   }
 
+  //Объявление публичного метода: отправить запрос серверу - удалить лайк карточки
   removeCardLike(_id) {
     return fetch (`${this._url}/cards/${_id}/likes`, {
       method: 'DELETE',
       headers: this._headers,
     })
-     .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+    .then((res) => {
+      return this._getServerResponse(res)
+    })
+  }
+
+  //Объявление публичного метода: отправить запрос - обновить аватар
+  changeAvatar(link) {
+    return fetch (`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify ({
+        avatar: link,
       })
+    })
+    .then((res) => {
+      return this._getServerResponse(res)
+    })
   }
 }
