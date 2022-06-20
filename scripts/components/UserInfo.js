@@ -19,10 +19,12 @@ export default class UserInfo {
     this._userPersonalInfo.textContent = userPersonalInfo;
   }
 
+  //Объявление публичного метода: принять новый аватар пользователя
   setUserAvatar(userAvatar) {
     this._userAvatar.style.backgroundImage = `url(${userAvatar.avatar})`
   }
 
+  //Объявление публичного метода: загрузить все данные пользователя
   downloadUserInfo(newUserInfo) {
     this._userName.textContent = newUserInfo.name;
     this._userPersonalInfo.textContent = newUserInfo.about;

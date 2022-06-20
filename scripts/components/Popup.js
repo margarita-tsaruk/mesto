@@ -19,14 +19,14 @@ export default class Popup {
 
   //Объявление приватного метода: закрыть все модальные окна, нажав на клавишу Escape
   _handleEscClose(evt) {
-      if (evt.key === 'Escape') {
-        this.close();
-      }
+    if (evt.key === 'Escape') {
+      this.close();
+    }
   }
 
   //Объявление публичного метода: добавить слушателей событий для закрытия модальных окон
   setEventListeners() {
-      this._closeButton.addEventListener('click', () => this.close());
+    this._closeButton.addEventListener('click', () => this.close());
       this._popup.addEventListener('click', (event) => {
         if (event.target === event.currentTarget) {
           this.close();

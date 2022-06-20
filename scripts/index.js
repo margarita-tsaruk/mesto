@@ -26,6 +26,14 @@ import FormValidator from './components/FormValidator.js';
 //Экземпляр класса, который отвечает за запросы/ответы к серверу
 const api = new Api ('https://mesto.nomoreparties.co/v1/cohort-43')
 
+//Экземпляр класса, который отвечает за отрисовку элементов на странице
+const cardList = new Section (
+  {renderer: (item) => {
+    cardList.addItem(getCard(item));
+  }},
+  containerSelector
+);
+
 //Экземпляр класса, который отвечает за управление отображением информации о пользователе на странице
 const userInfo = new UserInfo({
   nameSelector: '.profile__name',
@@ -37,11 +45,7 @@ const userInfo = new UserInfo({
 //Статический метод: отрисовать данные карточки и загрузить данные пользователя
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then((res) => {
-
     userInfo.downloadUserInfo(res[0]);
-    console.log(res[0].name)
-
-
     cardList.renderItems(res[1]);
   })
   .catch((err) => {
@@ -72,14 +76,15 @@ function getCard(item) {
       },
 
       handleLikeCard: (cardElement) => {
-        console.log(cardElement)
         const likeElement = document.querySelector('.card__like-button');
         const likesQuantity = document.querySelector('.card__like-quantity');
 
         if(!likeElement.classList.contains('card__like-button_active')) {
           api.setLikeCard(cardElement.id)
           .then((res) => {
+            console.log(res)
             card.setLikesAmount(res, likesQuantity)
+            console.log(likesQuantity)
           })
           .catch((err) => {
             console.log(err);
@@ -102,14 +107,6 @@ function getCard(item) {
   const cardElement = card.generateCard();
   return cardElement;
 }
-
-//Экземпляр класса, который отвечает за отрисовку элементов на странице
-const cardList = new Section (
-  {renderer: (item) => {
-    cardList.addItem(getCard(item));
-  }},
-  containerSelector
-);
 
 //Экземпляр класса, который отвечает за модальное окно "Редактировать профиль"
 const popupEditProfile = new PopupWithForm (

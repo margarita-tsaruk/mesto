@@ -1,6 +1,5 @@
 .profile__avatar {
   grid-area: avatar;
-  background-image: url("../../../images/Avatar.png");
   background-size: cover;
   position: relative;
   width: 120px;

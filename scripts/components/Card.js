@@ -15,12 +15,14 @@ export default class Card {
     return cardElement;
   }
 
+  //Объявление приватного метода: отобразить кнопку удаления карточки в зависимости от пользователя
   _displayTrashButton() {
     if(this._data.owner._id !== this._myId) {
       this._trashButton.classList.add('card__trash-button_hidden')
     }
   }
 
+  //Объявление приватного метода: сравнить кто поставил лайк по id
  _checkLikeOwner() {
   this._data.likes.forEach((item) => {
       if(item._id === this._myId) {
@@ -29,11 +31,13 @@ export default class Card {
     })
   }
 
+  //Объявление публичного метода: отобразить лайк и количество лайков
   setLikesAmount(object, likesQuantity) {
     likesQuantity.textContent = object.likes.length;
     this._buttonLike.classList.add('card__like-button_active')
   }
 
+  //Объявление публичного метода: отобразить количество лайков и убрать лайк
   removeLikesAmount(object, likesQuantity) {
     likesQuantity.textContent = object.likes.length;
     this._buttonLike.classList.remove('card__like-button_active')
@@ -56,6 +60,7 @@ export default class Card {
     return this._element;
   }
 
+  //Объявление публичного метода: получить id
   getId() {
     return this._data._id;
   }
@@ -66,12 +71,13 @@ export default class Card {
       this._element = null;
   }
 
-_setCardData() {
-  this._cardImage.src = this._data.link;
-  this._cardTitle.textContent = this._data.name;
-  this._cardTitle.alt = this._data.name;
-  this._likeQuantity.textContent = this._data.likes.length;
-}
+  //Объявление приватного метода: получить данные карточки
+  _setCardData() {
+    this._cardImage.src = this._data.link;
+    this._cardTitle.textContent = this._data.name;
+    this._cardTitle.alt = this._data.name;
+    this._likeQuantity.textContent = this._data.likes.length;
+  }
 
   //Объявление приватного метода: добавить слушателей событий для карточки (новое место)
   _setEventListeners() {

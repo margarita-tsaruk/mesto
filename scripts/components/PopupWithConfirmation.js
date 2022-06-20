@@ -1,8 +1,8 @@
 import Popup from "./Popup.js";
 export default class PopupWithConfirmation extends Popup {
-  constructor ( popupSelector ) {
+  constructor (popupSelector) {
     super(popupSelector);
-    this._form  = this._popup.querySelector('.popup__form');
+    this._form = this._popup.querySelector('.popup__form');
   }
 
   //Объявление публичного метода: добавить слушателей событий
@@ -14,6 +14,7 @@ export default class PopupWithConfirmation extends Popup {
     });
   }
 
+  //Объявление публичного метода: колбек отправка формы
   setSubmitAction(submitHandler) {
       this._submitHandler = submitHandler;
   }
