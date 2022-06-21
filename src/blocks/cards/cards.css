@@ -12,6 +12,6 @@
 
 @media all and (max-width: 719px) {
   .cards {
-    margin: 36px 19px 0;    /* Это отступы по макету, я не могу их убрать */
+    margin: 36px 19px 0;
   }
 }

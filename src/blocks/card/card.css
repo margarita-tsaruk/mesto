@@ -10,8 +10,8 @@
   position: relative;
 }
 
-@media all and (max-width: 384px) {
+@media all and (max-width: 334px) {
   .card {
-    grid-template-columns: repeat(auto-fit, minmax(215px, 0));
+    grid-template-columns: repeat(auto-fit, minmax(196px, 0));
   }
 }

@@ -1,7 +1,7 @@
 .card__like-button {
   grid-area: button;
   padding: 0;
-  margin: 0 20px 0 0;
+  margin: 22px 20px 0 16px;
   background-image: url(../../../images/Like.svg);
   background-repeat: no-repeat;
   background-color: transparent;

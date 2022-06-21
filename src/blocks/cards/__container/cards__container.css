@@ -11,7 +11,7 @@
 @media all and (max-width: 720px) {
   .cards__container {
     gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(282px, 480px));
+    grid-template-columns: repeat(auto-fit, minmax(265px, 480px));
     justify-content: center;
   }
 }

@@ -1,4 +1,5 @@
 .card__trash-button {
+  display: block;
   padding: 0;
   position: absolute;
   top: 18px;
