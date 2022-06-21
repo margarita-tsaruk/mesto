@@ -79,8 +79,8 @@ export default class Api {
   }
 
   //Объявление публичного метода: отправить запрос серверу - поставить лайк карточки
-  setLikeCard(_id) {
-    return fetch (`${this._url}/cards/${_id}/likes`, {
+  setCardLike(data) {
+    return fetch (`${this._url}/cards/${data._id}/likes`, {
       method: 'PUT',
       headers: this._headers,
     })
@@ -90,8 +90,8 @@ export default class Api {
   }
 
   //Объявление публичного метода: отправить запрос серверу - удалить лайк карточки
-  removeCardLike(_id) {
-    return fetch (`${this._url}/cards/${_id}/likes`, {
+  removeCardLike(data) {
+    return fetch (`${this._url}/cards/${data._id}/likes`, {
       method: 'DELETE',
       headers: this._headers,
     })

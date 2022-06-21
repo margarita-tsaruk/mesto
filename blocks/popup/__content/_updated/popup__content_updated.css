@@ -1,4 +1,4 @@
-.popup__body {
+.popup__content_updated {
   background-color: #fff;
   border-radius: 10px;
   color: #000;
@@ -10,3 +10,5 @@
   width: 430px;
   min-height: 181px;
 }
+
+

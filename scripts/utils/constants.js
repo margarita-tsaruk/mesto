@@ -8,6 +8,7 @@ export const config = {
   errorClass: 'popup__error_visible'
 };
 
+
 //Модальные окна - "Редактировать профиль" и "Новое место"
 const popupEditProfile = document.querySelector('.popup_edit_profile');
 const popupAddPlace = document.querySelector('.popup_add_place');

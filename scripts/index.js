@@ -41,11 +41,13 @@ const userInfo = new UserInfo({
   avatarSelector: '.profile__avatar'
 });
 
+let userId;
 
 //Статический метод: отрисовать данные карточки и загрузить данные пользователя
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then((res) => {
     userInfo.downloadUserInfo(res[0]);
+    userId = res[0]._id;
     cardList.renderItems(res[1]);
   })
   .catch((err) => {
@@ -74,35 +76,29 @@ function getCard(item) {
             });
           })
       },
-
-      handleLikeCard: (cardElement) => {
-        const likeElement = document.querySelector('.card__like-button');
-        const likesQuantity = document.querySelector('.card__like-quantity');
-
-        if(!likeElement.classList.contains('card__like-button_active')) {
-          api.setLikeCard(cardElement.id)
+      handleLikeCard: (data) => {
+        console.log(data)
+        if(card.isLiked()) {
+          api.removeCardLike(data)
           .then((res) => {
-            console.log(res)
-            card.setLikesAmount(res, likesQuantity)
-            console.log(likesQuantity)
+            card.setLikesAmount(res);
+            card.removeLike();
           })
           .catch((err) => {
             console.log(err);
-          });
+          })
         } else {
-          api.removeCardLike(cardElement.id)
-          .then((res) => {
-            card.removeLikesAmount(res, likesQuantity)
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+          api.setCardLike(data)
+          .then((data) => {
+              card.setLikesAmount(data);
+              card.addLike();
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+          }
         }
-      }
-    },
-    '.template-card',
-    '0f91438dbdaa0555f50a9a2d'
-  )
+ }, '.template-card', userId)
 
   const cardElement = card.generateCard();
   return cardElement;
