@@ -26,8 +26,7 @@ export default class UserInfo {
 
   //Объявление публичного метода: загрузить все данные пользователя
   downloadUserInfo(newUserInfo) {
-    this._userName.textContent = newUserInfo.name;
-    this._userPersonalInfo.textContent = newUserInfo.about;
-    this._userAvatar.style.backgroundImage = `url(${newUserInfo.avatar})`;
+    this.setUserInfo(newUserInfo.name, newUserInfo.about);
+    this.setUserAvatar(newUserInfo);
   }
 }

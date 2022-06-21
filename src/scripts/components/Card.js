@@ -66,7 +66,7 @@ export default class Card {
   _setCardData() {
     this._cardImage.src = this._data.link;
     this._cardTitle.textContent = this._data.name;
-    this._cardTitle.alt = this._data.name;
+    this._cardImage.alt = this._data.name;
     this._likeQuantity.textContent = this._data.likes.length;
   }
 

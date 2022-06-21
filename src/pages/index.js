@@ -125,9 +125,8 @@ popupEditProfile.setEventListeners();
 
 //Экземпляр класса, который отвечает за модальное окно "Новое место"
 const popupAddPlace = new PopupWithForm (
-  '.popup_add_place',
-    //Отправить форму  модального окна "Новое место"
-    { handleFormSubmit: (data) => {
+  '.popup_add_place', {
+    handleFormSubmit: (data) => {
       popupAddPlace.saveLoading(true);
       const cardData = {
         name: data ['place-name'],
@@ -137,6 +136,7 @@ const popupAddPlace = new PopupWithForm (
       api.addCard(cardData)
         .then((card) => {
           cardList.addItemToStart(getCard(card));
+          popupAddPlace.close();
         })
         .catch((err) => {
           console.log(err);
