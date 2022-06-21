@@ -74,7 +74,7 @@ export default class Card {
   _setEventListeners() {
     this._buttonLike.addEventListener('click', () => {
         this._handleLikeCard(this._data);
-});
+    });
 
     this._element.querySelector('.card__trash-button').addEventListener('click', () => {
         this._handleDeleteCard(this);
@@ -85,23 +85,24 @@ export default class Card {
     });
   }
 
-    //Объявление публичного метода: вернуть готовую разметку со слушателями событий
-    generateCard() {
-      this._element = this._getTemplate();
-      this._element.id = this._data._id;
-      this._cardImage = this._element.querySelector('.card__image');
-      this._cardTitle = this._element.querySelector('.card__title');
-      this._buttonLike = this._element.querySelector('.card__like-button');
-      this._likeQuantity = this._element.querySelector('.card__like-quantity');
-      this._trashButton = this._element.querySelector('.card__trash-button')
+  //Объявление публичного метода: вернуть готовую разметку со слушателями событий
+  generateCard() {
+    this._element = this._getTemplate();
+    this._element.id = this._data._id;
+    this._cardImage = this._element.querySelector('.card__image');
+    this._cardTitle = this._element.querySelector('.card__title');
+    this._buttonLike = this._element.querySelector('.card__like-button');
+    this._likeQuantity = this._element.querySelector('.card__like-quantity');
+    this._trashButton = this._element.querySelector('.card__trash-button')
 
-      this._displayTrashButton();
-      this._setCardData();
-      this._setEventListeners();
-      this.setLikesAmount(this._data);
-      this._checkLikeOwner();
-      return this._element;
-    }
+    this._displayTrashButton();
+    this._setCardData();
+    this._setEventListeners();
+    this.setLikesAmount(this._data);
+    this._checkLikeOwner();
+    
+    return this._element;
+   }
 }
 
 
