@@ -158,7 +158,6 @@ const popupChangeAvatar = new PopupWithForm (
         .then((res) => {
           popupChangeAvatar.close();
           userInfo.setUserAvatar(res);
-
         })
         .catch((err) => {
           console.log(err);
